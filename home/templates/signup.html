@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}" />
+{% endblock css %}
+
+
+{% block content %}
+<head>
+    <style>
+        body {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+
+
+    <div class="container box">
+        <div class="input-form mx-auto">
+            <h4 class="mb-2">회원가입</h4>
+            <p style="font-size: medium;">주황색으로 표시된 칸은 모두 작성해야 회원가입이 가능해요 😆</p>
+            <!--회원가입 폼 시작-->
+            <form method="POST" enctype="multipart/form-data" class="validation-form" novalidate>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class = "mb-2" style="color:#FD6F22;">{{ form.username.label }}</label>
+                        <input type="text" name="username" class="form-control" maxlength="200"
+                            placeholder="아이디" value="" required>
+                        <div class="invalid-feedback">
+                            사용하실 아이디를 입력해주세요. <br> 로그인 할 때 사용돼요.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4" style="color:#FD6F22;">
+                        <label class = "mb-2"> {{ form.nickname.label }}</label>
+                        <input type="text" name="nickname" class="form-control custom-select" maxlength="200"
+                            placeholder="별명" value="" required>
+                        <div class="invalid-feedback">
+                            별명을 입력해주세요. <br> 앞으로 별명으로 이용해요.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class = "mb-2" style="color:#FD6F22;">{{ form.email.label }}</label>
+                    <input type="email" name="email" class="form-control custom-select" maxlength="255"
+                        placeholder="이메일" required>
+                    <div class="invalid-feedback">
+                        주로 사용하는 이메일주소를 입력해주세요 ex) moyeonhada@example.com
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class = "mb-2" style="color:#FD6F22;">{{ form.password1.label }}</label>
+                    <input type="password" name="password1" class="form-control" id = "password1"
+                        placeholder="비밀번호" required>
+                    <div class="invalid-feedback">
+                        비밀번호를 입력해주세요.
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class = "mb-2" style="color:#FD6F22;">{{ form.password2.label }}</label>
+                    <input type="password" name="password2" class="form-control" id = "password2"
+                        placeholder="비밀번호 재확인" required>
+                    <div class="invalid-feedback">
+                        비밀번호 재확인을 입력해주세요.
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class = "mb-2" style="color:#FD6F22;">{{ form.phone_number.label }}</label>
+                    <input type="text" name="phone_number" 
+                    class="form-control" placeholder="전화번호" maxlength="200" required>
+                    <div class="invalid-feedback">
+                        전화번호를 입력해주세요.
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label class = "mb-2">지역</label>
+                    <div class="col-6 mb-4">
+                        <select name="region_big" class = "form-control" >
+                            <option value="서울" selected>서울</option>
+                            <option value="경기도">경기도</option>
+                            <option value="강원도">강원도</option>
+                            <option value="충청도">충청도</option>
+                            <option value="전라도">전라도</option>
+                            <option value="경상도">경상도</option>
+                            <option value="인천">인천</option>
+                            <option value="대전">대전</option>
+                            <option value="광주">광주</option>
+                            <option value="대구">대구</option>
+                            <option value="울산">울산</option>
+                            <option value="부산">부산</option>
+                            <option value="대구">대구</option>
+                        </select>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <input type="text" name="region_small" 
+                        class="form-control" placeholder="시 / 구" maxlength="20" default = " ">
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-4">
+                        <label class = "mb-1">가입 목적</label>
+                        <select name="status" class = "form-control" >
+                            <option value="teacher">선생님입니다</option>
+                            <option value="student" selected>배우미입니다</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            가입 목적을 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="id_profile_image" class = "mb-1">프로필 사진</label>
+                        <input type="file" name="profile_image" accept="image/*" class="form-control custom-select d-block w-100"
+                            class="" placeholder="프로필 사진">
+                        <div class="invalid-feedback">
+                            프로필 사진을 선택해주세요
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="mb-4"> <br>
+                <button class="btn-lg btn-user" type="submit">회원가입</button>
+                <p class="mt-4 mb-4 text-muted">이미 계정이 있다면? <a style="color:#FD6F22;" href="{% url 'login' %}"> 로그인</a>
+                </p>
+            </form>
+            <!--회원가입 폼 끝-->
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const forms = document.getElementsByClassName('validation-form');
+
+            Array.prototype.filter.call(forms, (form) => {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+
+        var password = document.getElementById("password1")
+            , confirm_password = document.getElementById("password2");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) { // 만일 두 인풋 필드값이 같지 않을 경우
+                // setCustomValidity의 값을 지정해 무조건 경고 표시가 나게 하고
+                confirm_password.setCustomValidity("비밀번호가 일치하지 않습니다.");
+            }
+            else { // 만일 두 인풋 필드값이 같을 경우
+                // 오류가 없으면 메시지를 빈 문자열로 설정해야한다. 오류 메시지가 비어 있지 않은 한 양식은 유효성 검사를 통과하지 않고 제출되지 않는다.
+                // 따라서 빈값을 주어 submit 처리되게 한다
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+
+{% endblock %}

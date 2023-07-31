@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+    <style>
+      body {
+        background: #f1f1f1;
+      }
+    </style>
+</head>
+
+
+<div class="container end-box">
+        <div class = "signup-end input-form form-signin mx-auto">
+            <div class="mb-2">
+            <br>
+            {% if user.profile_image %}
+                <img class="mb-4" src="{{ user.profile_image.url }}" alt="프로필 사진 대체" width="200px" height="200px" style="border-radius: 30%;">
+            {% else %}
+                <img class="mb-4" src="{% static 'img/logo.svg' %}" alt="프로필 사진 대체" width="200px" height="200px" style="border-radius: 30%;">
+            {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <h4 class="mb-2">{{ user.nickname }} 님</h4> &nbsp; &nbsp;
+                <h4 class="mb-2">환영합니다 👋🏻 </h4>
+                <h4 class="mb-3">모연하다에 가입해주셔서 감사합니다</h4>
+            </div>
+
+            <br>
+
+            <a href="{% url 'main' %}" style="color: white; text-decoration-line: none;">
+                <button class="btn-lg btn-user" type="submit">홈으로</button>
+            </a>
+            
+            <br>
+            
+        </div>
+</div>
+
+{% endblock %}

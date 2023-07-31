@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+    <style>
+      body {
+        background: #f1f1f1;
+      }
+    </style>
+</head>
+
+<div class="mx-auto">
+  <img src="{% static 'img/banner2.png' %}">
+</div>
+<div class = "main">
+
+</div>
+{% endblock %}

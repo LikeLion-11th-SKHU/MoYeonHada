@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<div class="container user-box">
+  <div class="input-form form-signin mx-auto">
+    <form method="POST" class="validation-form" novalidate>
+      <img class="logo" src="{% static 'img/logo.svg' %}" alt="" width="20%" height="20%">
+      <h1 class="h3 mb-1 fw-bolder">로그인</h1>
+      <br>
+      {% csrf_token %}
+      <div class="form-floating mb-3" style="display: inline-block; z-index: 1;">
+        <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="255"
+          class="form-control" placeholder="아이디" required>
+        <label class = "login-form-label">아이디</label>
+        <div class="invalid-feedback">
+          아이디를 작성해주세요 !
+        </div>
+      </div>
+      <br>
+      <div class="form-floating" style="display: inline-block; margin-bottom: 40px;">
+        <input type="password" name="password" autocomplete="current-password"
+          class="form-control" placeholder="비밀번호" required>
+        <label class = "login-form-label">비밀번호</label>
+        <div class="invalid-feedback">
+          비밀번호를 작성해주세요 !
+        </div>
+      </div>
+      <br>
+      <button class="btn-lg btn-user" type="submit">로그인</button>
+      <p class="mt-4 mb-3 text-muted">계정을 만들고 싶다면? <a style="color:#FD6F22;" href="{% url 'signup' %}"> 회원가입</a></p>
+    </form>
+  </div>
+</div>
+
+<script>
+    window.addEventListener('load', () => {
+        const forms = document.getElementsByClassName('validation-form');
+        Array.prototype.filter.call(forms, (form) => {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+</script>
+
+{% endblock %}

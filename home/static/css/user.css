@@ -1,0 +1,161 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+body {
+  background: #f5f5f5;
+}
+
+.box {
+  margin-top: 12vh;
+  margin-bottom: 12vh;
+  font-weight: 500;
+  font-size: larger;
+}
+
+.user-box {
+    margin-top: 18vh;
+    margin-bottom: 15vh;
+    font-weight: 500;
+    font-size: larger;
+}
+
+.end-box {
+  margin-top: 18vh;
+  margin-bottom: 18vh;
+  font-weight: 500;
+  font-size: larger;
+}
+
+.form-control {
+  text-align: left;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+.form-floating {
+  width: 70%;
+}
+
+.remember {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.btn-user {
+    color: white;
+    background-color: #fd6f22b0;
+    border: 0;
+    width: 10vw;
+    height: 4vh;
+    border-radius: 0.5vw;
+  }
+
+.btn-user:hover {
+    color: white;
+    background-color: #FD6F22;
+    border: 0;
+    width: 10vw;
+    height: 4vh;
+    transition: 0.2s;
+    border-radius: 0.5vw;
+}
+
+.login-form-label {
+    color: #959393;
+}
+
+/*여기서 부터 회원가입 css*/
+
+.input-form {
+  max-width: 680px;
+  margin-top: 80px;
+  padding: 32px;
+
+  background: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.18)
+}
+
+/* 반응형 패드 */
+@media (max-width:900px) {
+  body {
+      margin-top: 5vh;
+  }
+  
+  .logo_style{
+      width: 11vw;
+  }
+
+  nav {
+      font-size: 1.8vw;
+  }
+  
+  .nav-profileimg {
+      width: 4vw;
+      padding-bottom: 0.3vw;
+  }
+  
+  .dropdown-end {
+      padding-top: 0.3vh;
+  }
+  
+  .end-box {
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    font-weight: 500;
+    font-size: larger;
+  }
+}
+
+/* 반응형 모바일*/ 
+@media (max-width: 700px){
+  .user-box {
+    margin-top: 13vh;
+    margin-bottom: 15vh;
+    font-weight: 500;
+    font-size: larger;
+  }
+
+  img.logo {
+    width: 30%;
+    height: 30%;
+  }
+
+  .form-floating {
+    width: 85%;
+  }
+
+  .btn-user {
+    color: white;
+    background-color: #fd6f22b0;
+    border: 0;
+    width: 20vw;
+    height: 5vh;
+    border-radius: 2vw;
+  }
+
+  .btn-user:hover {
+    color: white;
+    background-color: #FD6F22;
+    border: 0;
+    width: 20vw;
+    height: 5vh;
+    transition: 0.2s;
+    border-radius: 2vw;
+  }
+
+  .end-box {
+    margin-top: 18vh;
+    margin-bottom: 18vh;
+    font-weight: 500;
+    font-size: larger;
+  }
+}
