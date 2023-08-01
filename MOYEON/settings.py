@@ -54,6 +54,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'introduce.apps.IntroduceConfig',
+    'teacher.apps.TeacherConfig',
+    'student.apps.StudentConfig',
+    'oneday.apps.OnedayConfig',
+    'mypage.apps.MypageConfig',
 ]
 
 MIDDLEWARE = [
@@ -138,6 +142,10 @@ USE_TZ = True
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'home', 'static'),
     os.path.join(BASE_DIR, 'introduce', 'static'),
+    os.path.join(BASE_DIR, 'teacher', 'static'),
+    os.path.join(BASE_DIR, 'student', 'static'),
+    os.path.join(BASE_DIR, 'oneday', 'static'),
+    os.path.join(BASE_DIR, 'mypage', 'static'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
