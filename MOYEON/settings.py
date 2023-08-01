@@ -39,6 +39,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# 다른 개발환경에서 런서버가 필요하다면 이 코드 수정
 ALLOWED_HOSTS = []
 
 
