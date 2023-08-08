@@ -1,0 +1,30 @@
+<!-- 개인정보수정창 -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bookmark.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<div class="mypage_navbar">
+  <div class="mypage_navbar2">
+      <span style="margin: 10px;"><a class="corr" href="{% url 'mypage' %}">개인정보수정</a> </span><!--px를 다른 단위로 변경할 것임-->
+      <span style="margin: 10px;"><a class="booked" href="{% url 'bookmark' %}">찜목록</a> </span>
+      <span style="margin: 10px;"><a class="list-1" href="{% url 'list' %}">내가 쓴 글 모아보기</a> </span>
+  </div>
+  </div>
+  <hr>
+<script>
+
+</script>
+
+{% endblock %}
