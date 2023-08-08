@@ -116,7 +116,7 @@ body {
 }
 
 /* 반응형 모바일*/ 
-@media (max-width: 700px){
+@media (max-width: 500px){
   .user-box {
     margin-top: 13vh;
     margin-bottom: 15vh;
@@ -159,5 +159,3 @@ body {
     font-size: larger;
   }
 }
-
-/**/

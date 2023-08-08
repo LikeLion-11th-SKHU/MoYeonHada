@@ -1,0 +1,46 @@
+{% extends 'introduce_main.html' %}
+{% load static %}
+
+{% block introduce-title %}
+    모연하다 개발자 정보
+{% endblock %}
+
+{% block introduce-body %}
+    <div class = "developer">
+        <div>
+            <div class = "developer-box mb-2">
+                <img src="{% static 'img/youngbeen.png' %}" alt="주영빈" class = "developer-img">
+                <p class="info"> <b> 주영빈 </b> <br> ✉️ rommm1222@naver.com <br>
+                    <a class=nolink href="https://github.com/Rommmu" style="color: black">
+                        github.com/Rommmu</a>
+                </p>
+            </div>
+    
+            <div class = "developer-box">
+                <img src="{% static 'img/shinhee.png' %}" alt="김신희" class = "developer-img">
+                <p class="info"> <b>김신희</b> <br>✉️ rommm1222@naver.com <br>
+                    <a class=nolink href="https://github.com/Rommmu" style="color: black">
+                        github.com/Rommmu</a>
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <div class = "developer-box mb-2">
+                <img src="{% static 'img/sieun.png' %}" alt="김시은" class = "developer-img">
+                <p class="info"> <b>김시은</b> <br> ✉️ rommm1222@naver.com <br>
+                    <a class=nolink href="https://github.com/Rommmu" style="color: black">
+                        github.com/Rommmu</a>
+                </p>
+            </div>
+    
+            <div class = "developer-box">
+                <img src="{% static 'img/yongwook.png' %}" alt="김시은" class = "developer-img">
+                <p class="info"> <b></b> <br> ✉️ rommm1222@naver.com <br>
+                    <a class=nolink href="https://github.com/Rommmu" style="color: black">
+                        github.com/Rommmu</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
