@@ -1,19 +1,19 @@
-.introduce {
+.teacher {
     display: flex;
     width: 67%
 }
-.introduce-side {
+.teacher-side {
     width: 30%;
 }
 
-.introduce-content {
+.teacher-content {
     background-color: beige;
     width: 70%;
 }
 
 /* 반응형 */ 
 @media (max-width: 700px){
-    .introduce {
+    .teacher {
         display: flex;
         width: 100%;
     }

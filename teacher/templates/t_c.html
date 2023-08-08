@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/t_c.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+    <style>
+      body {
+        background: #f1f1f1;
+      }
+    </style>
+</head>
+
+<!-- <div class = "teacher mx-auto">
+  <div class = "teacher-side bg-light">
+    <nav class = "navbar">
+      이게머지..
+    </nav>
+  </div>
+  
+  <div class = "teacher-content">
+    여기는 글생성페이지
+  </div>
+</div> -->
+
+<form method="POST" action="{% url 't_create' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    모집 분야
+        <input type="checkbox", name="field", value="휴대전화">휴대전화 
+        <input type="checkbox", name="field", value="인터넷">인터넷 
+        <input type="checkbox", name="field", value="키오스크">키오스크
+        <input type="checkbox", name="field", value="생활편의">생활편의 
+        <input type="checkbox", name="field", value="기타">기타
+        <br>
+    모집 인원 <input type="number", name="number"> 명을 모집해요 <br>
+    모집 기간 <input type="date", name="period1"> 부터
+             <input type="date", name="period2"> 까지 모집해요 <br>
+    진행 지역 <input type="text", name="region"> 에서 진행해요 <br>
+                ㅇㅇ시 / ㅇㅇ구 까지 기입해주세요 <br>
+    모집 제목 <input type="text", name="title"> <br>
+    모집 내용 <textarea name="content" cols="30" rows="10"></textarea> <br>
+    대표 사진 <input type="file" name="photo"> <br>
+    <button type="submit">글 작성</button>
+</form>
+{% endblock %}
