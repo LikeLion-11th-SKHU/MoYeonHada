@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/t_main.css' %}" />
+{% endblock css %}
+
+{% block content %}
+
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<!-- <div class = "teacher mx-auto">
+  <div class = "teacher-side bg-light">
+    <nav class = "navbar">
+      이게머지..
+    </nav>
+  </div>
+  
+  <div class = "teacher-content">
+    모집글들
+  </div>
+</div> -->
+
+<h1>모연 선생님</h1>
+<div class="teacher">
+
+  <div class="teacher-top">
+    <div class="teacher-path">
+      <div class="teacher-path-icon">
+        <img src="{% static 'image/homeIcon.png' %}">
+      </div>
+      <div class="teacher-path-letter">
+        <span>메인 > 모연 선생님</span>
+      </div>
+    </div>
+
+    <div class="teacher-create">
+      <a class="teacher-create-link" href="{% url 't_c' %}">글쓰기</a>
+    </div>
+  </div>
+
+
+  <div class="teacher-content-all">
+    {% for teachers in teachers.all %}
+    <div class="teacher-content-one">
+      <div class="teacher-content-img">
+        {% if teachers.photo %}
+        <img src="{{ teachers.photo.url }}" alt="iamge" width="150" height="150">
+        {% endif %}
+      </div>
+
+      <div class="teacher-content-letter">
+        <div class="teacher-content-field">
+          <span>{{ teachers.field }}</span>
+        </div>
+        <div class="teacher-content-region">
+          <span>{{ teachers.region }}</span>
+        </div>
+        <div class="teacher-content-number">
+          <span>지원 /{{ teachers.number }}</span>
+        </div>
+      </div>
+
+      <div class="teacher-content-title">
+        <span><a href="{% url 't_r' teachers.id %}">{{ teachers.title }}</a></span>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% endblock %}
+  
+</div>
