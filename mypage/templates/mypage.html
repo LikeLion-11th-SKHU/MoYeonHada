@@ -1,0 +1,109 @@
+<!-- 개인정보수정창 -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<div class="mypage_navbar">
+  <div class="mypage_navbar2">
+      <span style="margin: 10px;"><a class="corr" href="{% url 'mypage' %}">개인정보수정</a> </span><!--px를 다른 단위로 변경할 것임-->
+      <span style="margin: 10px;"><a class="booked" href="{% url 'bookmark' %}">찜목록</a> </span>
+      <span style="margin: 10px;"><a class="list-1" href="{% url 'list' %}">내가 쓴 글 모아보기</a> </span>
+  </div>
+  </div>
+  <hr>
+  <!-- <div class="personal information correction_nav">
+    <ol>글자크기 작고 얇게, css로 앞에 목록표시 변경
+      <li></li>
+    </ol>
+  </div> -->
+  <div class="personal_information_correction">
+      <p class="td1"class="td1" >{{ user.usernickname }}님의 회원정보</p>
+    <hr>
+    <div class="correction">
+      <p>{{ profile_image }}</p>
+      <p class="modify1" style="font-size: small"><button>프로필 사진 수정</button></p>
+      <div></div>
+      <div></div>
+      <table class="correction_all">
+        <tr>
+          <td class="td1">별명</td>
+          <td>{{ user.nickname }}</td>
+        </tr>
+        <tr>
+          <td class="td1">아이디(변경불가)</td>
+          <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+          <td class="td1">비밀번호</td>
+          <td>{{ user.password1 }}</td>
+        </tr>
+        <tr>
+          <td class="td1">비밀번호 재확인</td>
+          <td>{{ user.password2 }}</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td1">전화번호</td>
+          <td>{{ user.phone_number }}</td>
+        </tr>
+        <tr>
+          <td class="td1">이메일</td>
+          <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+          <td class="td1">주소(도/시)</td>
+          <td>{{ user.region_big }}</td>
+        </tr>
+        <tr>
+          <td class="td1">주소(시/구)</td>
+          <td>{{ user.region_small }}</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr class="modify2">
+          <td>&nbsp;</td>
+          <td><button>개인정보수정</button></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="modify3"><button>회원탈퇴</button></td>
+        </tr>
+      </table>
+  
+      <!-- <label for="nickname">별명</label>
+          <input type="text" id="nickname"> -->
+      <!-- 'username': '아이디',
+      'email': '이메일주소',
+      'password1': '비밀번호',
+      'password2': '비밀번호 재확인',
+      'nickname': '별명',
+      'phone_number': '전화번호',
+      'profile_image': '프로필 사진',
+      'status': '가입 목적',
+      'region_big': '도 / 시',
+      'region_small': '시 / 구',
+      간편로그인 정리 -->
+  
+    </div>
+<script>
+
+</script>
+
+{% endblock %}

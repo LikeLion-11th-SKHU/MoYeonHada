@@ -89,9 +89,9 @@ li > a.logout-view:hover {
 }
 
 /* 반응형 모바일 */
-@media (max-width:500px) {
+@media (max-width:700px) {
     nav {
-        font-size: 3.5vw;
+        font-size: 3vw;
     }
     
     .logo_style{
