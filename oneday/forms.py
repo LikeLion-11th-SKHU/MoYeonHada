@@ -1,11 +1,11 @@
 from django import forms
-from .models import Oneday
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+from .models import OnedayRecruit, OnedayApply
 
-class OnedayForm(forms.ModelForm):
+class OnedayRecruitForm(UserCreationForm):
     class Meta:
         model = OnedayRecruit
-        fields = ['category', 'number', 'period', 'region', 'hashtag', 'title', 'content', 'picture']
+        fields = ['number', 'period', 'region', 'hashtag', 'title', 'content', 'picture']
 
         labels = {
             'category': '모집 분야',
@@ -18,25 +18,19 @@ class OnedayForm(forms.ModelForm):
             'picture': '대표 사진',
         }
 
+class OnedayApplyForm(UserCreationForm):
+    class Meta:
         model = OnedayApply
-        fields = ['username', 'email', 'password1', 'password2', 'nickname', 'phone_number', 'status', 'region_big', 'region_small', 'profile_image']
+        fields = ['username', 'phone_number', 'email', 'people', 'memo']
 
         labels = {
-            'name': '이름',
-            'phone': '전화번호',
-            'number': '인원',
-            'memo': '메모',
+            'username': '이름', 
+            '전화번호': '이메일',
+            '인원': '비밀번호',
+            '메모': '비밀번호 확인',
         }
 
         widgets = {
             'status': forms.RadioSelect(),
             'region_big': forms.Select(),
         }
-
-class AuthenticationForm(AuthenticationForm):
-    error_messages = {
-        'invalid_login': (
-            "비밀번호나 이메일이 올바르지 않습니다. 다시 확인해 주세요."
-        ),
-        'inactive': ("로그인 하세요."),
-    }

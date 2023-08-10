@@ -14,15 +14,28 @@
     </style>
 </head>
 
-<div class = "introduce mx-auto">
-  <div class = "introduce-side bg-light">
-    <nav class = "navbar">
-      사이드 네브바가 들어갈 공간입니다
-    </nav>
-  </div>
-  
-  <div class = "introduce-content">
-    아아ㅏㅏㅏ아아 콘텐츠입니다
-  </div>
-</div>
+<body>
+  <h1>체험활동</h1>
+  <nav class="navbar navbar-expand-lg bg-light fixed-top border-bottom">
+      <div class="container mx-auto">
+          <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+              <img src="{% static 'img/moyeon.png' %}" class="logo_style" alt="모연하다 로고">
+          </a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07"
+              aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" style="text-align: right; font-weight: bold;" id="navbarsExample07">
+              <ul class="nav col-lg-auto justify-content-center">
+                  <li><a href="{% url 'introduce_main' %}" style="color:#fd945b" class="nav-link px-2.5">모연하다 소개</a></li>
+                  <li><a href="{% url 't_main' %}" style="color:#fd945b" class="nav-link px-2.5">모연 선생님</a></li>
+                  <li><a href="" style="color:#fd945b" class="nav-link px-2.5">모연 배우미</a></li>
+                  <li><a href="{% url 'oneday_main' %}" style="color:#fd945b" class="nav-link px-2.5">체험활동</a></li>
+                  <!-- 로그인/회원가입 메뉴 등... -->
+              </ul>
+          </div>
+      </div>
+  </nav>
 {% endblock %}

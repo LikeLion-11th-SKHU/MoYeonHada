@@ -1,0 +1,20 @@
+.teacher {
+    display: flex;
+    width: 67%
+}
+.teacher-side {
+    width: 30%;
+}
+
+.teacher-content {
+    background-color: beige;
+    width: 70%;
+}
+
+/* 반응형 */ 
+@media (max-width: 700px){
+    .teacher {
+        display: flex;
+        width: 100%;
+    }
+}
