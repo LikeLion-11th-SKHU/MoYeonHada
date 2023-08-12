@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'student.apps.StudentConfig',
     'oneday.apps.OnedayConfig',
     'mypage.apps.MypageConfig',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,5 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
