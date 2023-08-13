@@ -37,8 +37,43 @@
 {{ teacher.region }} <br>
 /{{ teacher.number }}명 <br>
 {{ teacher.period1 }} - {{ teacher.period2 }} <br>
-{{ teacher.content }} <br>
+{{ teacher.content|safe }} <br>
 
-<br> <a href="{% url 't_u' teacher.id %}">글 수정</a>
-<br> <a href="{% url 't_d' teacher.id %}">글 삭제</a>
+
+<!-- 작성자만 수정/삭제 가능 -->
+{% if request.user == teacher.user %}
+<br> <a href="{% url 't_u' teacher.pk %}">글 수정</a>
+{% endif %}
+{% if request.user == teacher.user %}
+<form action="{% url 't_r' teacher.pk %}" method="POST" >
+    {% csrf_token %}
+    <input type="submit" value="글 삭제" >
+</form>
+{% endif %}
+
+
+
+
+<hr>
+<p>댓글</p>
+댓글 {{ comment|length }}개
+
+<form action="{% url 'comment_create' teacher.pk %}" method="POST">
+  {% csrf_token %}
+  {{ commentform }}
+  <input type="submit" value="댓글등록">
+</form>
+
+<ul>
+  {% for comments in comment %}
+    <li>{{comments.user}} - {{comments.content}}
+      {% if request.user == comments.user %}
+      <form action="{% url 'comment_delete' comments.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+      </form>
+      {% endif %}
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
