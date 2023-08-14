@@ -15,24 +15,20 @@
   </style>
 </head>
 
-<div class="mypage_navbar">
+  <nav class="mypage_navbar">
   <div class="mypage_navbar2">
       <span style="margin: 10px;"><a class="corr" href="{% url 'mypage' %}">개인정보수정</a> </span><!--px를 다른 단위로 변경할 것임-->
       <span style="margin: 10px;"><a class="booked" href="{% url 'bookmark' %}">찜목록</a> </span>
       <span style="margin: 10px;"><a class="list-1" href="{% url 'list' %}">내가 쓴 글 모아보기</a> </span>
   </div>
-  </div>
+  </nav>
   <hr>
-  <!-- <div class="personal information correction_nav">
-    <ol>글자크기 작고 얇게, css로 앞에 목록표시 변경
-      <li></li>
-    </ol>
-  </div> -->
+
   <div class="personal_information_correction">
-      <p class="td1"class="td1" >{{ user.usernickname }}님의 회원정보</p>
+      <p class="td1"class="td1" >{{ user.nickname }}님의 회원정보</p>
     <hr>
     <div class="correction">
-      <p>{{ profile_image }}</p>
+      <p>{{ profile_image }}</p> <!--프로필 이미지 가져오기 how?-->
       <p class="modify1" style="font-size: small"><button>프로필 사진 수정</button></p>
       <div></div>
       <div></div>
@@ -67,11 +63,7 @@
         </tr>
         <tr>
           <td class="td1">주소(도/시)</td>
-          <td>{{ user.region_big }}</td>
-        </tr>
-        <tr>
-          <td class="td1">주소(시/구)</td>
-          <td>{{ user.region_small }}</td>
+          <td>{{ user.region }}</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -79,11 +71,14 @@
         </tr>
         <tr class="modify2">
           <td>&nbsp;</td>
-          <td><button>개인정보수정</button></td>
+          <td><a href="{% url 'update' %}">개인정보수정</a></button></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td class="modify3"><button>회원탈퇴</button></td>
+          <td class="modify3">
+            <form action="{% url 'delete' %}" method="POST"> <!--어떻게 연결할것?-->
+              {% csrf_token %}
+              <button type="submit">회원탈퇴</button></td>
         </tr>
       </table>
   
@@ -102,8 +97,12 @@
       간편로그인 정리 -->
   
     </div>
-<script>
-
-</script>
+    <script type = "text/javascript">
+      // function maxLengthCheck(object){
+      //     if (object.value.length > object.maxLength) {
+      //         object.value = object.value.slice(0, object.maxLength);
+      //         }   
+      //     }
+  </script>
 
 {% endblock %}
