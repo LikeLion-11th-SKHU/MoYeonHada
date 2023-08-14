@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'oneday.apps.OnedayConfig',
     'mypage.apps.MypageConfig',
     'django_summernote',
-    'django_summernote',
 ]
 
 MIDDLEWARE = [
