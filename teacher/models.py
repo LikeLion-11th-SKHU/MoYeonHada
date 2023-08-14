@@ -4,7 +4,7 @@ from django.conf import settings
 # Create your models here.
 
 class Teacher(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='Teachers')
     
     title = models.CharField(max_length=50, null=False, blank = False,)
     number = models.PositiveIntegerField()
@@ -25,9 +25,9 @@ class Teacher(models.Model):
 
 
 class Comment(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='Comments')
     
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='Comments')
     
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
