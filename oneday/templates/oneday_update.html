@@ -2,27 +2,34 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_update.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_main.css' %}" />
+<style>
+  body {
+    background: #f1f1f1;
+  }
+</style>
 {% endblock css %}
 
 {% block content %}
-<head>
-    <style>
-      body {
-        background: #f1f1f1;
-      }
-    </style>
-</head>
+<form action="{% url 'oneday_update' oneday.pk %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <table>
+      {{ form.as_table }}
+  </table>
+  <button type="submit">글 작성</button>
+</form>
 
-<div class = "introduce mx-auto">
-  <div class = "introduce-side bg-light">
-    <nav class = "navbar">
-      사이드 네브바가 들어갈 공간입니다
+<!-- 주석처리된 부분
+<div class="oneday mx-auto">
+  <div class="oneday-side bg-light">
+    <nav class="navbar">
+      이게머지..
     </nav>
   </div>
   
-  <div class = "introduce-content">
-    아아ㅏㅏㅏ아아 콘텐츠입니다
+  <div class="oneday-content">
+    여기는 수정 페이지
   </div>
 </div>
+-->
 {% endblock %}

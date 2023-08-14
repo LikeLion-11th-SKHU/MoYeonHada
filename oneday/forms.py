@@ -1,42 +1,83 @@
 from django import forms
-from .models import Oneday
-from django.contrib.auth.forms import AuthenticationForm
+from django_summernote.widgets import SummernoteWidget
+from .models import OnedayCreate, OnedayApply, Comment, Review, Hashtag
 
-class OnedayForm(forms.ModelForm):
+
+class OnedayCreateForm(forms.ModelForm):
+    hashtag_input = forms.CharField(
+        label='해시태그', 
+        required=False, 
+        help_text='해시태그를 쉼표로 구분해서 입력하세요',
+        widget=forms.TextInput(attrs={'placeholder': '#예시'})
+    )  # 새로운 필드 추가
+
     class Meta:
-        model = OnedayRecruit
-        fields = ['category', 'number', 'period', 'region', 'hashtag', 'title', 'content', 'picture']
+        model = OnedayCreate
+        fields = ['title', 'field', 'number', 'period1', 'period2', 'region', 'content', 'photo']
+        exclude = ('user', 'hashtags')
 
         labels = {
-            'category': '모집 분야',
+            'title': '제목',
+            'field': '모집 분야',
             'number': '모집 인원',
-            'period': '모집 기간',
+            'period1': '모집 기간1',
+            'period2': '모집 기간2',
             'region': '진행 지역',
-            'hashtag': '해시태그',
-            'title': '글 제목',
             'content': '모집 내용',
-            'picture': '대표 사진',
+            'photo': '대표 사진',
+        }
+        
+        widgets = {
+            'field': forms.RadioSelect(),
+            'period1': forms.DateInput(attrs={'type': 'date'}),
+            'period2': forms.DateInput(attrs={'type': 'date'}),
+            'content': SummernoteWidget(),
         }
 
-        model = OnedayApply
-        fields = ['username', 'email', 'password1', 'password2', 'nickname', 'phone_number', 'status', 'region_big', 'region_small', 'profile_image']
+    def __init__(self, *args, **kwargs):
+        super(OnedayCreateForm, self).__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.initial['hashtag_input'] = ', '.join([hashtag.tag for hashtag in self.instance.hashtags.all()])
 
+    def save(self, *args, **kwargs):
+        instance = super(OnedayCreateForm, self).save(commit=False)
+        instance.save()
+
+        # 기존 해시태그 연결 삭제
+        instance.hashtags.clear()
+
+        hashtag_names = self.cleaned_data['hashtag_input'].split(',')
+        for name in hashtag_names:
+            name = name.strip()
+            if name.startswith("#"):
+                name = name[1:]
+            hashtag, created = Hashtag.objects.get_or_create(tag=name)
+            instance.hashtags.add(hashtag)
+        return instance
+    
+class OnedayApplyForm(forms.ModelForm):
+    class Meta:
+        model = OnedayApply
+        fields = ['name', 'phone', 'people', 'memo']
+        exclude = ('user',)
+        
         labels = {
             'name': '이름',
             'phone': '전화번호',
-            'number': '인원',
+            'people': '지원 인원',
             'memo': '메모',
         }
-
+        
         widgets = {
-            'status': forms.RadioSelect(),
-            'region_big': forms.Select(),
+            'memo': SummernoteWidget(),
         }
 
-class AuthenticationForm(AuthenticationForm):
-    error_messages = {
-        'invalid_login': (
-            "비밀번호나 이메일이 올바르지 않습니다. 다시 확인해 주세요."
-        ),
-        'inactive': ("로그인 하세요."),
-    }
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('content',)

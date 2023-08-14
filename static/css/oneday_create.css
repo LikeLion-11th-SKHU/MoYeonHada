@@ -1,0 +1,20 @@
+.oneday {
+  display: flex;
+  width: 67%
+}
+.oneday-side {
+  width: 30%;
+}
+
+.oneday-content {
+  background-color: beige;
+  width: 70%;
+}
+
+/* 반응형 */ 
+@media (max-width: 700px){
+  .oneday {
+      display: flex;
+      width: 100%;
+  }
+}

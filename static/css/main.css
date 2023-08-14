@@ -1,0 +1,14 @@
+.main {
+    width: 67%
+}
+
+img {
+    width: 100%;
+}
+
+/* 반응형 */ 
+@media (max-width: 900px) {
+    .main {
+        width: 100%;
+    }
+}

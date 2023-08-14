@@ -1,0 +1,26 @@
+.mypage_navbar2{
+    list-style-type:none; 
+    text-align: left; 
+    font-weight: bold;
+}
+.personal_information_correction{/*전체 블럭*/
+    width: 600px; 
+    height: 1000px; 
+    margin: 0 auto; ;
+}
+.correction_all{ /*개인정보 table*/
+    background-color: #F8F8F8; 
+    border-radius: 30px;
+    width: 100%;
+}
+.td1{
+    color: #FD6F22;
+    font-weight: bold;
+    
+}
+.modify2{
+    float: left;
+}
+.modify3{
+    float: right;
+}

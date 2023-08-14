@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'oneday.apps.OnedayConfig',
     'mypage.apps.MypageConfig',
     'django_summernote',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'home', 'static'),
     os.path.join(BASE_DIR, 'introduce', 'static'),
@@ -149,13 +154,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mypage', 'static'),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -163,3 +164,25 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+
+
+#써머놑
+
+
+MEDIA_URL = '/media/'
+
+SUMMERNOTE_CONFIG = {
+    'iframe': False,  
+    'summernote': {
+        'width': '100%',
+        'height': '300px',
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview']],
+        ],
+    },
+}
