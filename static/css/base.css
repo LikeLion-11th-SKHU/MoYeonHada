@@ -1,0 +1,109 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+@font-face {
+    font-family: 'GangwonEdu_OTFBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+	text-align: center;
+	align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    font-weight: 600;
+    font-size: 1.3vw;
+}
+
+.logo_style{
+	width: 6vw;
+}
+
+.navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 0 !important;
+    align-items: center;
+}
+
+.navbar-color{
+	background-color: #f3f3f3;
+}
+
+.nav-profileimg {
+    width: 2vw;
+    padding-bottom: 0.3vw;
+    border-radius: 30%;
+}
+
+li > a.user-page:hover {
+    color: #fd945b;
+}
+
+li > a.logout-view:hover {
+    color: #7a7a7a;
+}
+
+.footer {
+	background-color:#000000;
+	color:white;
+	padding-top: 50px;
+	padding-bottom: 50px !important;
+}
+
+/* nav에 이미지 넣을 거면 필요 */
+/* .dropdown-end {
+    padding-top: 0.7vh;
+} */
+
+/* 반응형 패드 */
+@media (max-width:900px) {
+    body {
+        margin-top: 5vh;
+    }
+    
+    .logo_style{
+        width: 11vw;
+    }
+
+    nav {
+        font-size: 1.8vw;
+    }
+    
+    .nav-profileimg {
+        width: 4vw;
+        padding-bottom: 0.3vw;
+    }
+    /* nav에 이미지 넣을 거면 필요 */
+    /* .dropdown-end {
+        padding-top: 0.3vh;
+    } */
+}
+
+/* 반응형 모바일 */
+@media (max-width:500px) {
+    nav {
+        font-size: 3.5vw;
+    }
+    
+    .logo_style{
+        width: 16vw;
+    }
+
+    .nav-profileimg {
+        width: 8vw;
+        padding-bottom: 0.3vw;
+    }
+/* nav에 이미지 넣을 거면 필요 */
+    /* .dropdown-end {
+        padding-top: 0.3vh;
+    } */
+}

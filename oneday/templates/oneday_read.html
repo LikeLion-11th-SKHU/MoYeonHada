@@ -1,8 +1,11 @@
+
+
+
 {% extends 'base.html' %}
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_read.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_main.css' %}" />
 {% endblock css %}
 
 {% block content %}
@@ -10,19 +13,111 @@
     <style>
       body {
         background: #f1f1f1;
-      }
+      } 
     </style>
 </head>
 
-<div class = "introduce mx-auto">
-  <div class = "introduce-side bg-light">
+<!-- <div class = "oneday mx-auto">
+  <div class = "oneday-side bg-light">
     <nav class = "navbar">
-      사이드 네브바가 들어갈 공간입니다
+      이게머지..
     </nav>
   </div>
   
-  <div class = "introduce-content">
-    아아ㅏㅏㅏ아아 콘텐츠입니다
+  <div class = "oneday-content">
+    여기는 디테일 페이지
   </div>
-</div>
+</div> -->
+
+
+
+{% if oneday.photo %}
+<img src="{{ oneday.photo.url }}" alt="image" width="200" height="200">
+{% endif %}
+
+{{ oneday.field }} <br>
+{{ oneday.title }} <br>
+{{ oneday.region }} <br>
+/{{ oneday.number }}명 <br>
+{{ oneday.period1 }} - {{ oneday.period2 }} <br>
+{{ oneday.content|safe }} <br>
+{% if oneday.hashtags.all %}
+    <p>
+    {% for hashtag in oneday.hashtags.all %}
+        #{{ hashtag.tag }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    </p>
+{% endif %}
+
+<!-- 작성자만 수정/삭제 가능 -->
+{% if request.user == oneday.user %}
+<br> <a href="{% url 'oneday_update' oneday.pk %}">글 수정</a>
+
+<form action="{% url 'oneday_update' oneday.pk %}" method="POST" >
+    {% csrf_token %}
+    <input type="submit" name="action" value="글 삭제">
+</form>
+{% else %}
+<a href="{% url 'oneday_apply' oneday.pk %}">신청하기</a>
+{% endif %}
+
+
+
+
+<hr>
+<p>댓글</p>
+댓글 {{ comment|length }}개
+
+<form action="{% url 'comment_create' oneday.pk %}" method="POST">
+  {% csrf_token %}
+  {{ commentform }}
+  <input type="submit" value="댓글등록">
+</form>
+
+<ul>
+  {% for comments in comment %}
+    <li>{{ comments.user }} - {{ comments.content }}
+      {% if request.user == comments.user %}
+      <form action="{% url 'comment_delete' comments.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+      </form>
+
+      <!-- 수정 버튼 추가 -->
+      <form method="GET" action="{% url 'comment_edit' comments.pk %}">
+        <input type="submit" value="수정">
+      </form>
+
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<p>리뷰</p>
+댓글 {{ review|length }}개
+
+<form action="{% url 'review_create' oneday.pk %}" method="POST">
+  {% csrf_token %}
+  {{ reviewform }}
+  <input type="submit" value="리뷰등록">
+</form>
+
+<ul>
+  {% for reviews in review %}
+    <li>{{ reviews.user }} - {{ reviews.content }}
+      {% if request.user == reviews.user %}
+      <form action="{% url 'review_delete' reviews.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+      </form>
+
+      <!-- 수정 버튼 추가 -->
+      <form method="GET" action="{% url 'review_edit' reviews.pk %}">
+        <input type="submit" value="수정">
+      </form>
+
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
 {% endblock %}

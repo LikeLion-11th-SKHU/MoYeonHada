@@ -14,15 +14,12 @@
     </style>
 </head>
 
-<div class = "introduce mx-auto">
-  <div class = "introduce-side bg-light">
-    <nav class = "navbar">
-      사이드 네브바가 들어갈 공간입니다
-    </nav>
-  </div>
-  
-  <div class = "introduce-content">
-    아아ㅏㅏㅏ아아 콘텐츠입니다
-  </div>
-</div>
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <table>
+    {{ form.hashtag_input.label_tag }}: {{ form.hashtag_input }}
+    {{ form.as_table }}
+  </table>
+  <button type="submit">글 작성</button>
+</form>
 {% endblock %}
