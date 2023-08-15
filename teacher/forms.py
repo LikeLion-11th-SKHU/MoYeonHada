@@ -1,6 +1,6 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
-from .models import Teacher, Comment
+from .models import Teacher, TeacherComment
 
 
 class TeacherForm(forms.ModelForm):
@@ -29,8 +29,8 @@ class TeacherForm(forms.ModelForm):
     
 
 
-class CommentForm(forms.ModelForm):
+class TeacherCommentForm(forms.ModelForm):
     class Meta:
-        model = Comment
+        model = TeacherComment
         fields = ('content',)
 

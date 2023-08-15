@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import OnedayCreate, OnedayApply, Comment, Review, Hashtag
-from .forms import OnedayCreateForm, OnedayApplyForm, CommentForm, ReviewForm
+from .models import OnedayCreate, OnedayApply, OnedayComment, Review, Hashtag
+from .forms import OnedayCreateForm, OnedayApplyForm, OnedayCommentForm, ReviewForm
 from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
@@ -53,9 +53,9 @@ def oneday_read(request, pk):
                return redirect('oneday_main')
         return redirect('oneday_main')
     else:
-        commentform = CommentForm()
+        commentform = OnedayCommentForm()
         reviewform = ReviewForm()  # 리뷰 폼 추가
-        comment = oneday.comment_set.all
+        comment = oneday.OnedayComments.all
         review = oneday.review_set.all
 
         content = {'oneday': oneday, 'commentform':commentform, 'comment':comment, 'reviewform':reviewform, 'review':review}
@@ -118,10 +118,10 @@ def oneday_apply(request, pk):
 
 
 
-def comment_create(request, pk):
+def o_comment_create(request, pk):
     oneday = get_object_or_404(OnedayCreate, pk=pk)
     if request.method == 'POST':
-        commentform = CommentForm(request.POST)
+        commentform = OnedayCommentForm(request.POST)
         if commentform.is_valid():
             comment = commentform.save(commit=False)
             comment.oneday = oneday
@@ -129,8 +129,8 @@ def comment_create(request, pk):
             comment.save()
         return redirect('oneday_read', oneday.pk)
 
-def comment_edit(request, comment_pk):
-    comment = get_object_or_404(Comment, pk=comment_pk)
+def o_comment_edit(request, comment_pk):
+    comment = get_object_or_404(OnedayComment, pk=comment_pk)
     
     if request.user != comment.user:
         return HttpResponseForbidden()
@@ -146,8 +146,8 @@ def comment_edit(request, comment_pk):
 
     return render(request, 'oneday_read.html', {'comment': comment})
 
-def comment_delete(request, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
+def o_comment_delete(request, comment_pk):
+    comment = OnedayComment.objects.get(pk=comment_pk)
     if request.user == comment.user:
         oneday_pk = comment.oneday_id  # 댓글이 연결된 oneday의 pk 값
         comment.delete()

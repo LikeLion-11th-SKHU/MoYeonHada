@@ -9,7 +9,7 @@ urlpatterns = [
     path('t_c/', views.t_c, name='t_c'),
     path('t_r/<int:pk>', views.t_r, name='t_r'),
     path('t_u/<int:pk>', views.t_u, name='t_u'),
-    path('comment/<int:pk>', views.comment_create, name='comment_create'),
-    path('comment/<int:comment_pk>/delete', views.comment_delete, name='comment_delete'),
+    path('t_comment/<int:pk>', views.t_comment_create, name='t_comment_create'),
+    path('t_comment/<int:comment_pk>/delete', views.t_comment_delete, name='t_comment_delete'),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

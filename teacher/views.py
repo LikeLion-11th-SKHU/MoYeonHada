@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Teacher, Comment
-from .forms import TeacherForm, CommentForm
+from .models import Teacher, TeacherComment
+from .forms import TeacherForm, TeacherCommentForm
 from django.urls import reverse
 
 # Create your views here.
@@ -35,8 +35,8 @@ def t_r(request, pk):
                return redirect('t_main')
         return redirect('t_main')
     else:
-        commentform = CommentForm()
-        comment = teacher.comment_set.all
+        commentform = TeacherCommentForm()
+        comment = teacher.TeacherComments.all
         content = {'teacher': teacher, 'commentform':commentform, 'comment':comment}
         return render(request, 't_r.html', content)
     
@@ -45,7 +45,7 @@ def t_u(request, pk):
     teacher = Teacher.objects.get(pk=pk)
     if request.user == teacher.user:
         if request.method == 'POST':
-            form = CommentForm(request.POST, request.FILES, instance=teacher)
+            form = TeacherCommentForm(request.POST, request.FILES, instance=teacher)
             if form.is_valid():
                 form.save()
                 return redirect('t_r', pk=teacher.pk)
@@ -57,10 +57,10 @@ def t_u(request, pk):
         return redirect('t_main')
 
 
-def comment_create(request,pk):
+def t_comment_create(request,pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'POST':
-        commentform = CommentForm(request.POST)
+        commentform = TeacherCommentForm(request.POST)
         if commentform.is_valid():
             comment = commentform.save(commit=False)
             comment.teacher = teacher
@@ -68,10 +68,8 @@ def comment_create(request,pk):
             comment.save()
         return redirect('t_r', teacher.pk)
 
-
-
-def comment_delete(request, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
+def t_comment_delete(request, comment_pk):
+    comment = TeacherComment.objects.get(pk=comment_pk)
     if request.user == comment.user:
         teacher_pk = comment.teacher_id  # 댓글이 연결된 teacher의 pk 값
         comment.delete()

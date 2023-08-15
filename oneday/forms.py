@@ -1,6 +1,6 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
-from .models import OnedayCreate, OnedayApply, Comment, Review, Hashtag
+from .models import OnedayCreate, OnedayApply, OnedayComment, Review, Hashtag
 
 
 class OnedayCreateForm(forms.ModelForm):
@@ -72,9 +72,9 @@ class OnedayApplyForm(forms.ModelForm):
             'memo': SummernoteWidget(),
         }
 
-class CommentForm(forms.ModelForm):
+class OnedayCommentForm(forms.ModelForm):
     class Meta:
-        model = Comment
+        model = OnedayComment
         fields = ('content',)
 
 class ReviewForm(forms.ModelForm):
