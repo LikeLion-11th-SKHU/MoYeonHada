@@ -9,15 +9,71 @@
 <head>
     <style>
       body {
-        background: #f1f1f1;
+        background: #f4f4f4;
       }
     </style>
 </head>
 
-<div class="mx-auto">
-  <img src="{% static 'img/banner2.png' %}">
-</div>
-<div class = "main">
+<div class="main mx-auto flex-column" style="margin-top: 4%;">
+  <div class = "slide">
+    <img src="{% static 'img/banner1.png' %}">
+  </div>
 
+  <div class="main-container flex-column">
+    <div class = "main-content1">
+      <p class = "inner-text1"> 디지털 격차 해소를 위한 서비스 <b>모연하다</b> 소개</p>
+      <div class = "d-flex flex-row justify-content-center align-items-start mx-auto">
+        <div class = "main-content1-box mt-1">
+          <p class = "inner-text2"><b>모연 선생님이 무엇인가요 ?</b></p>
+          <p class = "inner-text3 mx-auto" style="text-align: left;"><b>모연 선생님</b>은 <br>
+            디지털 격차가 많이 발생하는 휴대전화, 인터넷, 키오스크 분야와 더불어 생활 편의와 같은 아날로그의 격차에서 어려움을 느껴 
+            이를 극복하고 싶어하는 이들을 도와  더 나은 세상으로의 한 걸음을 도모하는 이들을 말합니다.
+          </p>
+        </div>
+        <div class = "main-content1-box mt-1">
+          <p class = "inner-text2"><b>모연 배우미가 무엇인가요 ?</b></p>
+          <p class = "inner-text3 mx-auto" style="text-align: left;"><b>모연 배우미</b>는 <br>
+            일상생활을 하며 겪는 키오스크, 휴대전화 등 혼자서 극복하기 어려운 디지털 격차를 일대일로, 혹은 다대일로 집중적으로 해결해 나감으로써 
+            배우미가 또 누군가의 선생님으로 뒤바꿈되는 
+            궁극적인 미래를 도모하는 이들을 말합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class = "main-content2_wrap">
+      <div class = "main-content2 d-flex align-items-center mx-auto">
+        <div class = "main-content2-box1 my-auto">
+          <p class = "inner-text1" style="text-align: left;"><b> 원하는 시간, 원하는 수업을 <br> 소수정예로</b></p>
+          <p class = "inner-text4" style="text-align: left;"> <b> 모연 배우미</b> 에 배우고 싶은 수업을, <br>
+            내가 수업을 받고 싶은 시간을 작성해주시면 <br>
+            모연 선생님이 차례차례 연락을 주실거에요 :) <br>
+          </p>
+        </div>
+        <div class = "main-content2-box2">
+          <img src="{% static 'img/chat.png' %}" alt="모연하다 메인 채팅" class="chat-img">
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class = "main-content3 d-flex flex-column justify-content-center mx-auto">
+      <p class = "inner-text1"> <b>모연하다</b>에는 어떤 글들이 올라오나요?</p>
+
+      <!-- <div class = "main-content3_wrap d-flex flex-row my-auto">
+        <div class = "main-content3_box1">
+          <p class = "inner-text1" style="text-align: left;"><b> 원하는 시간, 원하는 수업을 <br> 소수정예로</b></p>
+          <p class = "inner-text4" style="text-align: left;"> <b> 모연 배우미</b> 에 배우고 싶은 수업을, <br>
+            내가 수업을 받고 싶은 시간을 작성해주시면 <br>
+            모연 선생님이 차례차례 연락을 주실거에요 :) <br>
+          </p>
+        </div>
+        <div class = "main-content3_box2">
+          <img src="{% static 'img/phone.jpg' %}" alt="모연하다 메인 채팅" class="mainIntro-img">
+        </div>
+      </div> -->
+    </div>
+  </div>
 </div>
+
 {% endblock %}
