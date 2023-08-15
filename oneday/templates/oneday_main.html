@@ -6,23 +6,102 @@
 {% endblock css %}
 
 {% block content %}
+
 <head>
-    <style>
-      body {
-        background: #f1f1f1;
-      }
-    </style>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
 </head>
 
-<div class = "introduce mx-auto">
-  <div class = "introduce-side bg-light">
-    <nav class = "navbar">
-      사이드 네브바가 들어갈 공간입니다
-    </nav>
+<h1>체험 활동</h1>
+<div class="oneday">
+
+  <div class="oneday-top">
+    <div class="oneday-path">
+      <div class="oneday-path-icon">
+        <img src="{% static 'image/homeIcon.png' %}">
+      </div>
+      <div class="oneday-path-letter">
+        <span>메인 > 체험 활동</span>
+      </div>
+      <div class="oneday-create">
+        <a class="oneday-create-link" href="{% url 'oneday_create' %}">글쓰기</a>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <!-- form 태그를 시작하면서 action을 현재 페이지로 설정하고, GET 방식으로 전송합니다. -->
+      <form method="GET" action=".">
+          <input type="text" id="search-input" class="search-input" name="q" placeholder="검색어를 입력하세요">
+          <input type="submit" id="search-button" class="search-button" value="검색">
+      </form>
+    </div>
+
+
+  <div class="oneday-content-all">
+    {% for onedays in onedays.all %}
+    <div class="oneday-content-one">
+      <div class="oneday-content-img">
+        {% if onedays.photo %}
+        <img src="{{ onedays.photo.url }}" alt="iamge" width="150" height="150">
+        {% endif %}
+      </div>
+
+      <div class="oneday-content-letter">
+        <div class="oneday-content-field">
+          <span>{{ onedays.field }}</span>
+        </div>
+        <div class="oneday-content-region">
+          <span>{{ onedays.region }}</span>
+        </div>
+        <div class="oneday-content-number">
+          <span>지원 /{{ onedays.number }}</span>
+        </div>
+      </div>
+      <div>
+        <div class="oneday-content-hashtag"></div>
+          {% for hashtag in onedays.hashtags.all %}
+              #{{ hashtag.tag }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="oneday-content-title">
+        <span><a href="{% url 'oneday_read' onedays.id %}">{{ onedays.title }}</a></span>
+      </div>
+    </div>
+    {% endfor %}
   </div>
-  
-  <div class = "introduce-content">
-    아아ㅏㅏㅏ아아 콘텐츠입니다
-  </div>
-</div>
+
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+
+{% if messages %}
+    {% for message in messages %}
+        <!-- 텍스트 알림 창을 위한 DIV -->
+        <div id="textAlert" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; background-color: white; padding: 20px; border-radius: 5px; display: none;">
+            <p>{{ message }}</p>
+            <button onclick="closeTextAlert()">Close</button>
+        </div>
+
+        <!-- 텍스트 알림 창을 표시하는 JavaScript -->
+        <script>
+            function closeTextAlert() {
+                document.getElementById("textAlert").style.display = "none";
+            }
+            
+            // 메시지가 있을 때 알림 창 표시
+            document.getElementById("textAlert").style.display = "block";
+        </script>
+    {% endfor %}
+{% endif %}
+
 {% endblock %}

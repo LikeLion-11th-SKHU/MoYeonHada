@@ -1,52 +1,76 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Teacher
+from .models import Teacher, TeacherComment
+from .forms import TeacherForm, TeacherCommentForm
+from django.urls import reverse
 
 # Create your views here.
-def t_main(request):
-    return render(request, 't_main.html')
 
-def t_c(request):
-    return render(request, 't_c.html')
-
-def t_create(request):
-    teacher = Teacher()
-    teacher.field = request.POST['field']
-    teacher.number = request.POST['number']
-    teacher.period1 = request.POST['period1']
-    teacher.period2 = request.POST['period2']
-    teacher.region = request.POST['region']
-    teacher.title = request.POST['title']
-    teacher.content = request.POST['content']
-    teacher.photo = request.FILES['photo']
-    teacher.save()
-    return redirect('t_main')
-    
 def t_main(request):
     teachers = Teacher.objects.all()
-    return render(request, 't_main.html', {'teachers': teachers})
+    content = {'teachers':teachers}
+    return render(request, 't_main.html', content)
 
-def t_r(request, id):
-    teacher = get_object_or_404(Teacher, id=id)
-    return render(request, 't_r.html', {'teacher': teacher})
+def t_c(request):
+    if request.method == 'POST':
+        form = TeacherForm(request.POST, request.FILES)
+        if form.is_valid():
+            teacher = form.save(commit=False)
+            teacher.user = request.user
+            teacher.save()
+            return redirect('t_r', pk=teacher.pk)
+        
+    else:
+        form = TeacherForm()
+    content = {'form': form}
+    return render(request, 't_c.html', content)
 
-def t_u(request, id):
-    t_u = Teacher.objects.get(id = id)
-    return render(request, 't_u.html', {'t_u': t_u})
 
-def t_update(request, id):
-    t_update = Teacher.objects.get(id=id)
-    t_update.field = request.POST['field']
-    t_update.number = request.POST['number']
-    t_update.period1 = request.POST['period1']
-    t_update.period2 = request.POST['period2']
-    t_update.region = request.POST['region']
-    t_update.title = request.POST['title']
-    t_update.content = request.POST['content']
-    t_update.photo = request.FILES['photo']
-    t_update.save()
-    return redirect('t_main')
 
-def t_d(request, id):
-    delete_diary = get_object_or_404(Teacher, id=id)
-    delete_diary.delete()
-    return redirect('t_main')
+def t_r(request, pk):
+    teacher = Teacher.objects.get(pk=pk)
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            if request.user == teacher.user:
+               teacher.delete()
+               return redirect('t_main')
+        return redirect('t_main')
+    else:
+        commentform = TeacherCommentForm()
+        comment = teacher.TeacherComments.all
+        content = {'teacher': teacher, 'commentform':commentform, 'comment':comment}
+        return render(request, 't_r.html', content)
+    
+
+def t_u(request, pk):
+    teacher = Teacher.objects.get(pk=pk)
+    if request.user == teacher.user:
+        if request.method == 'POST':
+            form = TeacherCommentForm(request.POST, request.FILES, instance=teacher)
+            if form.is_valid():
+                form.save()
+                return redirect('t_r', pk=teacher.pk)
+        else:
+            form = TeacherForm(instance=teacher)
+        content = {'teacher': teacher, 'form': form, }
+        return render(request, 't_u.html', content)
+    else:
+        return redirect('t_main')
+
+
+def t_comment_create(request,pk):
+    teacher = get_object_or_404(Teacher, pk=pk)
+    if request.method == 'POST':
+        commentform = TeacherCommentForm(request.POST)
+        if commentform.is_valid():
+            comment = commentform.save(commit=False)
+            comment.teacher = teacher
+            comment.user = request.user
+            comment.save()
+        return redirect('t_r', teacher.pk)
+
+def t_comment_delete(request, comment_pk):
+    comment = TeacherComment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        teacher_pk = comment.teacher_id  # 댓글이 연결된 teacher의 pk 값
+        comment.delete()
+    return redirect(reverse('t_r', kwargs={'pk': teacher_pk}))

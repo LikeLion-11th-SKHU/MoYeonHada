@@ -7,9 +7,9 @@ urlpatterns = [
     # teacher
     path('main/', views.t_main, name = 't_main'),
     path('t_c/', views.t_c, name='t_c'),
-    path('t_c/t_create', views.t_create, name='t_create'),
-    path('t_r/<int:id>', views.t_r, name='t_r'),
-    path('t_u/<int:id>', views.t_u, name='t_u'),
-    path('t_update/<int:id>', views.t_update, name='t_update'),
-    path('t_d/<int:id>', views.t_d, name='t_d'),
+    path('t_r/<int:pk>', views.t_r, name='t_r'),
+    path('t_u/<int:pk>', views.t_u, name='t_u'),
+    path('t_comment/<int:pk>', views.t_comment_create, name='t_comment_create'),
+    path('t_comment/<int:comment_pk>/delete', views.t_comment_delete, name='t_comment_delete'),
+    
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
