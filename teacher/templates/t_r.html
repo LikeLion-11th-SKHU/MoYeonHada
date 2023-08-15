@@ -58,7 +58,7 @@
 <p>댓글</p>
 댓글 {{ comment|length }}개
 
-<form action="{% url 'comment_create' teacher.pk %}" method="POST">
+<form action="{% url 't_comment_create' teacher.pk %}" method="POST">
   {% csrf_token %}
   {{ commentform }}
   <input type="submit" value="댓글등록">
@@ -68,7 +68,7 @@
   {% for comments in comment %}
     <li>{{comments.user}} - {{comments.content}}
       {% if request.user == comments.user %}
-      <form action="{% url 'comment_delete' comments.pk %}" method="POST">
+      <form action="{% url 't_comment_delete' comments.pk %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="삭제">
       </form>

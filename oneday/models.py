@@ -35,10 +35,10 @@ class OnedayApply(models.Model):
     def __str__(self):
         return self.title
 
-class Comment(models.Model):
-    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE)
+class OnedayComment(models.Model):
+    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE, related_name='OnedayComments')
     
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='OnedayComments')
     
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

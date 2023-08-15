@@ -24,10 +24,10 @@ class Teacher(models.Model):
     
 
 
-class Comment(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='Comments')
+class TeacherComment(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='TeacherComments')
     
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='Comments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='TeacherComments')
     
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
