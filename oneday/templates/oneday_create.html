@@ -17,9 +17,12 @@
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <table>
-    {{ form.hashtag_input.label_tag }}: {{ form.hashtag_input }}
     {{ form.as_table }}
   </table>
   <button type="submit">글 작성</button>
 </form>
 {% endblock %}
+
+
+
+

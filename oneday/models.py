@@ -5,7 +5,7 @@ from datetime import date
 # Create your models here.
 
 class OnedayCreate(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1, related_name='OnedayCreates')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     
     title = models.CharField(max_length=50, null=False, blank = False,)
     number = models.PositiveIntegerField()
@@ -24,9 +24,8 @@ class OnedayCreate(models.Model):
     def __str__(self):
         return self.title
     
-
 class OnedayApply(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1, related_name='OnedayApplys')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     
     name = models.CharField(max_length=50, null=False, blank = False,)
     phone = models.PositiveIntegerField()
@@ -37,9 +36,9 @@ class OnedayApply(models.Model):
         return self.title
 
 class Comment(models.Model):
-    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE, related_name='OnedayComments')
+    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE)
     
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='OnedayComments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -49,9 +48,9 @@ class Comment(models.Model):
     
 
 class Review(models.Model):
-    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE, related_name='Reviews')
+    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE)
     
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='Reviews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
