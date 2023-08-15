@@ -24,8 +24,12 @@ nav {
     font-size: 1.3vw;
 }
 
-.logo_style{
+.logo_style {
 	width: 6vw;
+}
+
+img.footer_logo {
+    width: 6vw;
 }
 
 .navbar-collapse {
@@ -74,6 +78,10 @@ li > a.logout-view:hover {
         width: 11vw;
     }
 
+    img.footer_logo {
+        width: 8vw;
+    }
+
     nav {
         font-size: 1.8vw;
     }
@@ -91,11 +99,15 @@ li > a.logout-view:hover {
 /* 반응형 모바일 */
 @media (max-width:500px) {
     nav {
-        font-size: 3.5vw;
+        font-size: 3vw;
     }
     
     .logo_style{
         width: 16vw;
+    }
+
+    img.footer_logo {
+        width: 10vw;
     }
 
     .nav-profileimg {
