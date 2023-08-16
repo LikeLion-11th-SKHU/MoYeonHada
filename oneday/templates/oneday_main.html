@@ -15,7 +15,7 @@
   </style>
 </head>
 
-<h1>체험 활동</h1>
+<p>체험 활동<p>
 <div class="oneday">
 
   <div class="oneday-top">
@@ -44,14 +44,14 @@
     {% for onedays in onedays.all %}
     <div class="oneday-content-one">
       <div class="oneday-content-img">
-        {% if onedays.photo %}
+        {% if onedays.photo %}`
         <img src="{{ onedays.photo.url }}" alt="iamge" width="150" height="150">
         {% endif %}
       </div>
 
       <div class="oneday-content-letter">
         <div class="oneday-content-field">
-          <span>{{ onedays.field }}</span>
+          <span>{{ onedays.field }}</span>`
         </div>
         <div class="oneday-content-region">
           <span>{{ onedays.region }}</span>
@@ -74,6 +74,10 @@
     </div>
     {% endfor %}
   </div>
+
+  {% for hashtag in all_hashtags %}
+  <a href="{% url 'search_by_hashtag' hashtag.tag %}" class="btn btn-primary">#{{ hashtag.tag }}</a>
+  {% endfor %}
 
 {% if messages %}
   <ul class="messages">

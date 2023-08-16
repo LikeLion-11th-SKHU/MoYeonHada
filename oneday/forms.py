@@ -1,6 +1,7 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
-from .models import OnedayCreate, OnedayApply, OnedayComment, Review, Hashtag
+from .models import OnedayCreate, OnedayApply, OnedayComment, OnedayReview, OnedayHashtag
+from django.db import models
 
 
 class OnedayCreateForm(forms.ModelForm):
@@ -51,7 +52,7 @@ class OnedayCreateForm(forms.ModelForm):
             name = name.strip()
             if name.startswith("#"):
                 name = name[1:]
-            hashtag, created = Hashtag.objects.get_or_create(tag=name)
+            hashtag, created = OnedayHashtag.objects.get_or_create(tag=name)
             instance.hashtags.add(hashtag)
         return instance
     
@@ -73,11 +74,18 @@ class OnedayApplyForm(forms.ModelForm):
         }
 
 class OnedayCommentForm(forms.ModelForm):
-    class Meta:
-        model = OnedayComment
-        fields = ('content',)
+    parent = forms.ModelChoiceField(
+        queryset=OnedayComment.objects.all(),
+        widget=forms.HiddenInput(),
+        required=False
+    )
 
-class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Review
-        fields = ('content',)
+        model = OnedayComment 
+        fields = ['content', 'parent']
+
+
+class OnedayReviewForm(forms.ModelForm):
+       class Meta:
+        model = OnedayReview
+        fields = ['content']

@@ -11,10 +11,10 @@ class OnedayCreate(models.Model):
     number = models.PositiveIntegerField()
     content = models.TextField()
     photo = models.ImageField(upload_to='images/', blank=True)
-    period1 = models.DateField(default=date(2023, 8, 10))
-    period2 = models.DateField(default=date(2023, 8, 15))
+    period1 = models.DateField(default='',max_length=50, null=False, blank = False,)
+    period2 = models.DateField(default='',max_length=50, null=False, blank = False,)
     region = models.CharField(default='',max_length=50, null=False, blank = False,)
-    hashtags = models.ManyToManyField('Hashtag')
+    hashtags = models.ManyToManyField('OnedayHashtag')
 
     FIELD_T = (('공예', '공예'), ('요리', '요리'), ('미술', '미술'), ('운동', '운동'), ('음악', '음악'), ('기타', '기타'))
     
@@ -42,24 +42,26 @@ class OnedayComment(models.Model):
     
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE) # 대댓글
     
     def __str__(self):
         return self.content
     
 
-class Review(models.Model):
-    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE)
+class OnedayReview(models.Model):
+    oneday = models.ForeignKey(OnedayCreate, on_delete=models.CASCADE, related_name='OnedayReviews')
     
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='OnedayReviews')
     
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.content
 
     
-class Hashtag(models.Model):
+class OnedayHashtag(models.Model):
     tag = models.CharField(max_length=50, unique=True)
     def __str__(self):
         return self.tag
