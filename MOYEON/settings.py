@@ -42,7 +42,9 @@ ALLOWED_HOSTS = get_secret("ALLOWED_HOSTS")
 DEBUG = False
 
 # 다른 개발환경에서 런서버가 필요하다면 이 코드 수정
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".ap-northeast-2.compute.amazonaws.com",
+]
 
 
 # Application definition
