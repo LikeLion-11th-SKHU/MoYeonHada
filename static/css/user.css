@@ -84,6 +84,19 @@ body {
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.18)
 }
 
+/*개인정보수정 css*/
+.password-change-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Adjust this value as needed */
+}
+
+.password-form-group {
+  margin-bottom: 10px;
+}
+
 /* 반응형 패드 */
 @media (max-width:900px) {
   body {
