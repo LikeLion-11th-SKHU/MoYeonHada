@@ -6,7 +6,7 @@ from django.http import HttpResponseForbidden
 from django.contrib import messages
 
 from django.http import JsonResponse
-from django.db.models import Count
+from django.db.models import Count, Q
 
 
 from mypage.models import WishlistOneday
@@ -18,7 +18,8 @@ def oneday_main(request):
     onedays = OnedayCreate.objects.all()
     
     # 사용되는 해시태그만 가져옵니다.
-    all_hashtags = OnedayHashtag.objects.annotate(num_onedays=Count('onedaycreate')).filter(num_onedays__gt=0)
+    all_hashtags = OnedayHashtag.objects.filter(~Q(tag = ''))
+    all_hashtags = all_hashtags.annotate(num_onedays=Count('onedaycreate')).filter(Q(num_onedays__gt=0))
     
     # 검색 쿼리를 확인합니다.
     query = request.GET.get('q')
@@ -47,6 +48,8 @@ def oneday_create(request):
             for tag in hashtags:
                 hashtag, created = OnedayHashtag.objects.get_or_create(tag=tag)
                 oneday.hashtags.add(hashtag)
+        else:
+            hashtag_text = None
         return redirect('oneday_main')
 
     else:
