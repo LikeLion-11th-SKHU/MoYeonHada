@@ -69,6 +69,26 @@
     </div>
 
   </div>
+  
+  <!--kimshinhee-->
+
+{% if user.is_authenticated %}
+{% if not already_in_wishlist %}
+  <form method="POST" action="{% url 'add_to_wishlist_t' teacher.id %}" onsubmit="setTimeout(function() {window.location.reload();}, 50);">
+    {% csrf_token %}
+    <button type="submit">찜하기</button>
+  </form>
+{% else %}
+  <form method="POST" action="{% url 'remove_from_wishlist_t' teacher.id %}" onsubmit="setTimeout(function() {window.location.reload();}, 50);">
+    {% csrf_token %}
+    <button type="submit">찜취소</button>
+  </form>
+{% endif %}
+{% else %}
+<p><a href="{% url 'login' %}">log in</a></p>
+{% endif %}
+
+<!--kimshinhee-->
 
 
 

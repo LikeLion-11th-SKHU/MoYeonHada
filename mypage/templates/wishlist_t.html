@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<div class="mypage_navbar">
+  <nav class="mypage_navbar2">
+    <span style="margin: 10px;"><a class="nav-corr" href="{% url 'mypage' %}">회원정보</a> </span>
+    <span style="margin: 10px;"><a class="nav-wishlist" href="{% url 'wishlist_t' %}">관심목록</a> </span>
+    <span style="margin: 10px;"><a class="nav-my_posts" href="{% url 'my_posts_t' %}">내가 쓴 글</a> </span>
+  </nav>
+</div>
+<hr style="width: 45%; margin: 0px auto;">
+<br>
+<div>
+  <nav>
+    <small><a href="{% url 'wishlist_t' %}"style="color: #FD6F22;font-weight: bold; text-decoration: none;">선생님 글</a></small>
+    <small><a href="{% url 'wishlist_s' %}"style="color: #FD6F22;font-weight: bold; text-decoration: none;">배우미 글</a></small>
+    <small><a href="{% url 'wishlist_o' %}"style="color: #FD6F22;font-weight: bold; text-decoration: none;">체험학습 글</a></small>
+  </nav>
+</div>
+<hr>
+
+<h2 class="wishlist-title">{{ user.nickname }}님의 관심목록</h2>
+<div class="wishlist-container">
+  {% for item in wishlists %}
+  <div class="wishlist-item" style="position: relative;"> <!-- 추가된 스타일 -->
+    <ul>
+      <li class="item-contents">
+        <div class="item-image">
+          {% if item.t_post.photo %}
+          <img src="{{ item.t_post.photo.url }}" alt="image" width="200" height="200">
+          {% endif %}
+        </div>
+        <div class="item-info">
+          <div>지역: {{ item.t_post.region }}</div>
+          <div>모집인원: {{ item.t_post.number }}</div>
+          <div><small>{{ item.t_post.period1 }} ~ {{ item.t_post.period2 }}</small></div>
+        </div>
+      </li>
+      <li class="item-title">
+        <h3><a href="{% url 't_r' item.t_post.id %}" style="font-weight: bold;color: #FD6F22;text-decoration: none;">{{ item.t_post.title }}</a></h3>
+      </li>
+      <!-- 삭제 버튼 위치 변경 -->
+      <div class="item-remove">
+        <a href="{% url 'remove_from_wishlist_t' item.t_post.id %}">삭제</a>
+      </div>
+    </ul>
+  </div>
+  {% empty %}
+    <p>관심목록이 비어있습니다</p>
+  {% endfor %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<div class="mypage_navbar">
+  <nav class="mypage_navbar2">
+    <span style="margin: 10px;"><a class="nav-corr" href="{% url 'mypage' %}">회원정보</a> </span>
+    <span style="margin: 10px;"><a class="nav-wishlist" href="{% url 'wishlist_t' %}">관심목록</a> </span>
+    <span style="margin: 10px;"><a class="nav-my_posts" href="{% url 'my_posts_t' %}">내가 쓴 글</a> </span>
+  </nav>
+</div>
+<hr style="width: 45%; margin: 0px auto;">
+<br>
+<div>
+  <nav>
+    <small><a href="{% url 'my_posts_t' %}" style="color: #FD6F22;font-weight: bold; text-decoration: none;">선생님 글</a></small>
+    <small><a href="{% url 'my_posts_s' %}" style="color: #FD6F22;font-weight: bold; text-decoration: none;">배우미 글</a></small>
+    <small><a href="{% url 'my_posts_o' %}" style="color: #FD6F22;font-weight: bold; text-decoration: none;">체험학습 글</a></small>
+  </nav>
+</div>
+<div>
+  <br>
+  <h4>내가 쓴 글 모아보기</h4>
+  <ul class="mypost-ul">
+      {% for post in posts_oneday %}
+          <li>
+              <div class="post-photo">
+                  {% if post.photo %}
+                  <img src="{{ post.photo.url }}" alt="image" width="200" height="200">
+                  {% else %}
+                  <div class="item-image"></div>
+                  {% endif %}
+              </div>
+              <div class="post-content">
+                  <div>{{ post.title }}</div>
+                  <div>지역: {{ post.region }}</div>
+                  <div>모집인원: {{ post.number }}</div>
+                  <div><small>{{ post.period1 }} ~ {{ post.period2 }}</small></div>
+              </div>
+              <div class="post-modify-btn">
+                  <a href="{% url 't_u' post.id %}">수정</a>
+              </div>
+          </li>
+      {% endfor %}
+  </ul>
+</div>
+{% endblock %}

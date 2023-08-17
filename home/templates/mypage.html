@@ -1,0 +1,90 @@
+<!-- 개인정보수정창 -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css' %}" />
+{% endblock css %}
+
+{% block content %}
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+<div class="mypage_navbar">
+  <nav class="mypage_navbar2">
+    <span style="margin: 10px;"><a class="nav-corr" href="{% url 'mypage' %}">회원정보</a> </span>
+    <span style="margin: 10px;"><a class="nav-wishlist" href="{% url 'wishlist_t' %}">관심목록</a> </span>
+    <span style="margin: 10px;"><a class="nav-my_posts" href="{% url 'my_posts_t' %}">내가 쓴 글</a> </span>
+  </nav>
+</div>
+<hr style="width: 45%; margin: 0px auto;">
+
+  <div class="personal_information_correction" >
+    <div class="personal-box">
+    <div class="inform-box">
+      <br>
+      <p class="td1"class="td1" >{{ user.nickname }}님의 회원정보</p>
+    <div class="correction">
+      {% if user.profile_image %}
+      <img class="mypage-profile-image" src ="{{ user.profile_image.url }}">
+      {% else %}
+      <p>프로필 사진이 없습니다.</p>
+      {% endif %}
+      <br>
+      <br>
+      <table class="correction_all">
+        <tr>
+          <td class="td1">별명</td>
+          <td>{{ user.nickname }}</td>
+        </tr>
+        <tr>
+          <td class="td1">아이디(변경불가)</td>
+          <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+          <td class="td1">전화번호</td>
+          <td>{{ user.phone_number }}</td>
+        </tr>
+        <tr>
+          <td class="td1">이메일</td>
+          <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+          <td class="td1">주소(도/시)</td>
+          <td>{{ user.region }}</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr">
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <div class="bt-change"><a href="{% url 'update' %}" style="text-decoration: none;"><small>개인정보수정</small></a></div>
+            <div class="bt-password-change"><a href="{% url 'change_password' %}"style="text-decoration: none;"><small>비밀번호 변경하기</small></a></div>
+            <div class="bt-membership-withdrawal">
+              <form class="withdrawal-box" action="{% url 'delete' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" style="border: none;"><small>회원탈퇴</small></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>  
+    </div>
+  </div>
+    <br>
+    <br>
+    <br>
+
+
+{% endblock %}

@@ -39,3 +39,4 @@ class User(AbstractUser):
 
     def __str__(self):
         return "<%d %s>" %(self.pk, self.email)
+
