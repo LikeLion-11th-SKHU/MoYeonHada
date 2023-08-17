@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/t_r.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/s_r.css' %}" />
 {% endblock css %}
 
 {% block content %}
@@ -20,33 +20,33 @@
   <div class="tr-bc">
     <div class="top mx-auto">
       <div class="tr-img">
-        {% if teacher.photo %}
-        <img src="{{ teacher.photo.url }}" alt="image" width="200" height="200">
+        {% if student.photo %}
+        <img src="{{ student.photo.url }}" alt="image" width="200" height="200">
         {% endif %}
       </div>
       <div class="tr-letters">
         <div class="tr-field">
-          <span>{{ teacher.field }}</span>
+          <span>{{ student.field }}</span>
         </div>
         <div class="tr-title">
-          <span>{{ teacher.title }}</span>
+          <span>{{ student.title }}</span>
         </div>
         <div class="tr-region">
           <img src="{% static 'image/mapIcon.png' %}">
-          <span>{{ teacher.region }}</span>
+          <span>{{ student.region }}</span>
         </div>
         <div class="tr-number">
           <img src="{% static 'image/followicon.png' %}">
-          <span>{{ teacher.number }}</span>
+          <span>{{ student.number }}</span>
         </div>
         <div class="tr-period">
           <img src="{% static 'image/calicon.png' %}">
-          <span>{{ teacher.period1 }} - {{ teacher.period2 }}</span>
+          <span>{{ student.period1 }} - {{ student.period2 }}</span>
         </div>
       </div>
     </div>
     <div class="tr-content">
-      {{ teacher.content|safe }}
+      {{ student.content|safe }}
     </div>
   </div>
 
@@ -55,13 +55,13 @@
   <!-- 작성자만 수정/삭제 가능 -->
   <div class="tr-btn">
     <div class="tr-u">
-      {% if request.user == teacher.user %}
-      <a href="{% url 't_u' teacher.pk %}">글 수정</a>
+      {% if request.user == student.user %}
+      <a href="{% url 's_u' student.pk %}">글 수정</a>
       {% endif %}
     </div>
     <div class="tr-d">
-      {% if request.user == teacher.user %}
-      <form action="{% url 't_r' teacher.pk %}" method="POST">
+      {% if request.user == student.user %}
+      <form action="{% url 's_r' student.pk %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="글 삭제">
       </form>
@@ -78,10 +78,10 @@
     <div class="tr-ctop">
       <span>댓글</span>
 
-      <form action="{% url 't_comment_create' teacher.pk %}" method="POST">
+      <form action="{% url 's_comment_create' student.pk %}" method="POST">
         {% csrf_token %}
-        {{ commentform }}
-        <input class="tr-cinput" type="submit" value="댓글등록">
+        {{ scommentform }}
+        <input class="sr-cinput" type="submit" value="댓글등록">
       </form>
     </div>
 

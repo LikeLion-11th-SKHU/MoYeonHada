@@ -1,0 +1,167 @@
+body {
+    background: #f5f5f5;
+}
+
+.teacher-container {
+    max-width: 750px;
+    margin-top: 40px;
+}
+
+.tp-title {
+    font-size: 30px;
+    color: #FD6F22;
+    font-weight: bold;
+    padding-top: 10;
+}
+
+.teacher-path {
+    width: 23%;
+    height: 30px;
+    display: flex;
+    margin-left: 5%;
+    justify-content: space-between;
+}
+
+.teacher-path-letter span {
+    color: #5b5b5b;
+    font-size: 17px;
+}
+
+.teacher-path-icon img {
+    width: 20px;
+}
+
+.teacher-path-letter {
+    font-size: 18;
+}
+
+.teacher-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.teacher-create {
+    background-color: white;
+    border-radius: 20px;
+    width: 13%;
+    box-shadow: 3px 3px 2px rgb(185, 185, 185);
+    margin-right: 5%;
+}
+
+.teacher-create-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #FD6F22;
+    font-size: 18;
+    font-weight: 700;
+}
+
+.teacher-content-all {
+    padding: 10;
+    margin-top: 10;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.teacher-content-one {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 3px 3px 2px rgb(185, 185, 185);
+    margin: 15;
+    width: 45%;
+    height: 220px;
+
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.t-img-letters {
+    display: flex;
+}
+
+.teacher-content-img {
+    width: 110px;
+    height: 110px;
+    background-color: #b9b9b9;
+    border-radius: 15px;
+    margin-top: 15;
+    margin-left: 15;
+    margin-right: 15;
+}
+
+.teacher-content-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.teacher-content-letter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 5;
+}
+
+.teacher-content-letter span {
+    font-size: 18;
+}
+
+.teacher-content-letter span img {
+    width: 18px;
+    height: 18px;
+    margin-right: 5;
+}
+
+
+.teacher-content-field {
+    color: #fd945b;
+    font-weight: bold;
+}
+
+.teacher-content-title {
+    font-weight: bold;
+    
+  width: 100%; /* 새로 추가 */
+  margin-top: 10px; /* 새로 추가 */
+  text-align: center; /* 새로 추가 */
+}
+
+.tt-title {
+    font-size: 20;
+}
+
+.tt-title a {
+    color: #d8672a;
+}
+
+
+/* 반응형 모바일*/
+@media (max-width: 650px) {
+    .teacher-content-one {
+        margin: 15;
+        width: 85%;
+        height: 220px;
+    
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .teacher-path-letter span {
+        font-size: 10px;
+    }
+}
+
+
+.footer {
+    background-color: #000000;
+    color: white;
+    padding-top: 50px;
+    padding-bottom: 50px !important;
+}
