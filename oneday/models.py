@@ -28,7 +28,9 @@ class OnedayApply(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     
     name = models.CharField(max_length=50, null=False, blank = False,)
-    phone = models.PositiveIntegerField()
+    phone1 = models.PositiveIntegerField()
+    phone2 = models.PositiveIntegerField(null=True)
+    phone3 = models.PositiveIntegerField(null=True)
     people = models.PositiveIntegerField()
     memo = models.TextField()
     
@@ -43,7 +45,7 @@ class OnedayComment(models.Model):
     content = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE) # 대댓글
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='OnedayComments') # 대댓글
     
     def __str__(self):
         return self.content

@@ -1,23 +1,35 @@
 /* 검색바 컨테이너 스타일 */
 
+
+
 .search-container {
     display: flex;
-    align-items: center;
-    margin: 20px 0;
+    align-items: flex-start;
+    margin: 90px 0 20px 0;
+    justify-content: center;
+    font-size: 32;
+    font-weight: 700;
+    color: #fd945b;
+  }
+
+ .search-container-title {
+    margin-top: 5;
   }
   
   /* 검색 입력 필드 스타일 */
   .search-input {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid gray;
+    border-radius: 20px;
     flex: 1;
     font-size: 14px;
+    width: 30vw;
+    background-color: rgba(238, 232, 232, 0.616);
   }
   
   /* 검색 버튼 스타일 */
   .search-button {
-    background-color: #14c047;
+    background-color: #fd945b;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -28,40 +40,60 @@
   
   /* 검색 버튼 마우스 호버 시 스타일 */
   .search-button:hover {
-    background-color: #0056b3;
+    background-color: #fd945b;
   }
+
 
 /* .oneday {
     display: flex;
     width: 67%
-}
+}*/
 .oneday-side {
     width: 30%;
-} */
+} 
 
-/* .oneday-content {
+ .oneday-content {
     background-color: beige;
     width: 70%;
-} */
+} 
 
 /* 반응형 */ 
-/* @media (max-width: 700px){
+ @media (max-width: 700px){
     .oneday {
         display: flex;
         width: 100%;
     }
+    
 }
 
-.oneday {
-    align-items: center;
+
+.empty-image {
+    width: 150px;
+    height: 150px;
+    background-color: #f7eded; /* 빈 공간의 배경색 설정 */
+    display: flex;
     justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin: 10 15 15 10;
 }
+
+
+.oneday {
+    align-items: flex-start;
+    justify-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10 25% 10 25%;
+    font-weight: 500;
+} 
 
 .oneday-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 25% 0;
+    padding: 0 20% 0;
+    
 }
 
 .oneday-path {
@@ -69,6 +101,7 @@
     height: 30px;
     display: flex;
     padding: 5 5 5 5;
+    justify-content: space-between;
 }
 
 .oneday-path-icon img{
@@ -103,34 +136,47 @@
 
 
 .oneday-content-all {
+    writing-mode: horizontal-tb;
+    white-space: nowrap;
     align-items: center;
-    padding: 0 25% 0;
+    padding: 10 10% 10 10%;
 }
 
 .oneday-content-one {
-    display: flex;
+    display: 150;
     padding: 0 25% 0;
     
     background-color: white;
     border-radius: 20px;
-    height: 20%;
-    width: 35%;
+    height: auto;
+    width: 260px;
     box-shadow: 3px 3px 2px rgb(185, 185, 185);
     margin: 15;
 
     align-items: center;
 }
 
-.oneday-content-img img{
-    display: flex;
-    width: 100;
-    height: 100;
+.oneday-path-letter img {
+    width: 20px;
+    height: 20px;
 }
 
-.oneday-content-letter {
+.oneday-content-img img{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    margin: 10 15 15 10;
+}
+
+.oneday-content-top {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.oneday-content-letter{
+    margin: 5 0 5 0;
 }
 
 .oneday-content-title {
@@ -142,5 +188,14 @@
 
 .oneday-content-field {
     flex-direction: row;
-    display: flex;
-} */
+    display: block;
+    color: #fd945b;
+} 
+
+.oneday-content-title a,
+.oneday-content-title a:link,
+.oneday-content-title a:visited {
+    color: black;
+    text-decoration: none;
+    font-size: 30px;
+}
