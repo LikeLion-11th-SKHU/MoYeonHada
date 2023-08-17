@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Student, StudentComment
 from .forms import StudentForm, StudentCommentForm
 from django.urls import reverse
+from mypage.models import WishlistStudent
 
 # Create your views here.
 
@@ -41,6 +42,10 @@ def s_r(request, pk):
         scommentform = StudentCommentForm()
         comment = student.StudentComments.all
         content = {'student': student, 'scommentform':scommentform, 'comment':comment}
+        if request.user.is_authenticated:
+            # 여기서 'wishlist' 앱의 Wishlist 모델에 접근해서 찜 상태를 확인
+            already_in_wishlist = WishlistStudent.objects.filter(user=request.user, s_post=student).exists()
+            content['already_in_wishlist'] = already_in_wishlist
         return render(request, 's_r.html', content)
     
 

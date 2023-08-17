@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css' %}" />
 {% endblock css %}
 
 {% block content %}
@@ -13,21 +13,29 @@
     }
   </style>
 </head>
-
-    <nav class="mypage_navbar">
-    <div class="mypage_navbar2">
-        <span style="margin: 10px;"><a class="corr" href="{% url 'mypage' %}">개인정보수정</a> </span><!--px를 다른 단위로 변경할 것임-->
-        <span style="margin: 10px;"><a class="booked" href="{% url 'bookmark' %}">찜목록</a> </span>
-        <span style="margin: 10px;"><a class="list-1" href="{% url 'list' %}">내가 쓴 글 모아보기</a> </span>
-    </div>
-    </nav>
-    <hr>
-
-<h1>회원정보수정</h1>
-<form method="POST">
- {% csrf_token %}
-
- {{ form.as_p }}
- <button type="submit">수정하기</button>
+<div class="mypage_navbar">
+  <nav class="mypage_navbar2">
+    <span style="margin: 10px;"><a class="nav-corr" href="{% url 'mypage' %}">회원정보</a> </span>
+    <span style="margin: 10px;"><a class="nav-wishlist" href="{% url 'wishlist_t' %}">관심목록</a> </span>
+    <span style="margin: 10px;"><a class="nav-my_posts" href="{% url 'my_posts_t' %}">내가 쓴 글</a> </span>
+  </nav>
+</div>
+<hr style="width: 45%; margin: 0px auto;">
+<br>
+<small style="color: #FD6F22;font-weight: bold;">회원정보수정</small>
+<br>
+<div class="changechange-form">
+<br>
+<br>
+<br>
+<form class="my-page-change-form" method="POST">
+  {% csrf_token %}
+  <table>
+  {{ form.as_table }}
+  </table>
+  <div class="button-container"><a href="{% url 'mypage' %}"style="text-decoration:none;"><button style="border: none;">뒤로가기</button></a>
+  <button type="submit"style="border: none;">수정하기</button></div>
 </form>
+</div>
+<br><br><br>
 {% endblock %}

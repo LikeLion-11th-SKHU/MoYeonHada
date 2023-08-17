@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Teacher, TeacherComment
 from .forms import TeacherForm, TeacherCommentForm
 from django.urls import reverse
+from mypage.models import Wishlist
 
 # Create your views here.
 
@@ -41,6 +42,10 @@ def t_r(request, pk):
         commentform = TeacherCommentForm()
         comment = teacher.TeacherComments.all
         content = {'teacher': teacher, 'commentform':commentform, 'comment':comment}
+        if request.user.is_authenticated:
+            # 여기서 'wishlist' 앱의 Wishlist 모델에 접근해서 찜 상태를 확인
+            already_in_wishlist = Wishlist.objects.filter(user=request.user, t_post=teacher).exists()
+            content['already_in_wishlist'] = already_in_wishlist
         return render(request, 't_r.html', content)
     
 

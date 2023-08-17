@@ -6,7 +6,12 @@ from .forms import UserForm, AuthenticationForm
 from .forms import CustomUserChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
 # from .forms import UserChangeForm
-from django.contrib import messages
+# from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from .forms import CustomPasswordChangeForm
+from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
 # main.html
@@ -58,6 +63,11 @@ def main(request):
     return render(request, 'main.html')
 
 # mypage.html
+def mypage(request):
+    return render(request, 'mypage.html')
+
+def mypage_update(request):
+    return render(request, 'mypage_update.html')
 
 def delete(request):
     user = request.user #로그인 되어있는 user에 대한 정보를 가져오고
@@ -67,32 +77,33 @@ def delete(request):
     #회원탈퇴할 때 진짜 할 것인지 한 번 더 물어보면 좋을 것 같음.
     return redirect('main')   #탈퇴 후 홈화면으로 redirect하기
 
+# def mypage_profile(request):
 
 def update(request):
     if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=request.user) #instance에 현재 request에 있는 user의 정보 넣어줌
-        if form.is_vaild():
+        if form.is_valid():
             form.save()
-            messages.success(request, '회원정보가 수정되었습니다.')
-            return redirect('main')
+            # messages.success(request, '회원정보가 수정되었습니다.')
+            return redirect('mypage')
     else:
         form = CustomUserChangeForm(instance=request.user)
-    context = {'form':form}  #이게 뭔지 잘 모르겠음.
+    context = {'form':form}
     return render(request, 'mypage_update.html', context)
 
-
-# def profile_view(request):
-#     if request.method == 'GET':
-#         return render(request, 'mypage.html')
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data.get('new_password1')
+            request.user.set_password(new_password)
+            request.user.save()
+            #비밀번호를 변경해도 로그아웃이 되지 않도록 함(세션 업데이트).
+            update_session_auth_hash(request, form.user)
+            # messages.success(request, '성공적으로 변경되었습니다.')
+            return redirect('mypage')  # Replace 'profile' with the desired URL
+    else:
+        form = CustomPasswordChangeForm(user=request.user)
     
-# def profile_update_view(request):
-#     if request.method == 'POST':
-#         user_change_form = UserChangeForm(request.POST, instance = request.user)
-
-#         if user_change_form.is_valid():
-#             user_change_form.save()
-#             messages.success(request, '회원정보가 수정되었습니다.')
-#             return render(request, 'mypage.html')
-    # else:
-    #     user_chage_form = UserChangeForm(instance = request.user)
-    #     return render(request, 'profile_update.html',{'user_change_form':user_change_form})
+    return render(request, 'change_password.html', {'form': form})

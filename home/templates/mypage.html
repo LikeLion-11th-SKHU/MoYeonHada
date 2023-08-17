@@ -14,24 +14,28 @@
     }
   </style>
 </head>
-
-  <nav class="mypage_navbar">
-  <div class="mypage_navbar2">
-      <span style="margin: 10px;"><a class="corr" href="{% url 'mypage' %}">개인정보수정</a> </span><!--px를 다른 단위로 변경할 것임-->
-      <span style="margin: 10px;"><a class="booked" href="{% url 'bookmark' %}">찜목록</a> </span>
-      <span style="margin: 10px;"><a class="list-1" href="{% url 'list' %}">내가 쓴 글 모아보기</a> </span>
-  </div>
+<div class="mypage_navbar">
+  <nav class="mypage_navbar2">
+    <span style="margin: 10px;"><a class="nav-corr" href="{% url 'mypage' %}">회원정보</a> </span>
+    <span style="margin: 10px;"><a class="nav-wishlist" href="{% url 'wishlist_t' %}">관심목록</a> </span>
+    <span style="margin: 10px;"><a class="nav-my_posts" href="{% url 'my_posts_t' %}">내가 쓴 글</a> </span>
   </nav>
-  <hr>
+</div>
+<hr style="width: 45%; margin: 0px auto;">
 
-  <div class="personal_information_correction">
+  <div class="personal_information_correction" >
+    <div class="personal-box">
+    <div class="inform-box">
+      <br>
       <p class="td1"class="td1" >{{ user.nickname }}님의 회원정보</p>
-    <hr>
     <div class="correction">
-      <p>{{ profile_image }}</p> <!--프로필 이미지 가져오기 how?-->
-      <p class="modify1" style="font-size: small"><button>프로필 사진 수정</button></p>
-      <div></div>
-      <div></div>
+      {% if user.profile_image %}
+      <img class="mypage-profile-image" src ="{{ user.profile_image.url }}">
+      {% else %}
+      <p>프로필 사진이 없습니다.</p>
+      {% endif %}
+      <br>
+      <br>
       <table class="correction_all">
         <tr>
           <td class="td1">별명</td>
@@ -40,18 +44,6 @@
         <tr>
           <td class="td1">아이디(변경불가)</td>
           <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-          <td class="td1">비밀번호</td>
-          <td>{{ user.password1 }}</td>
-        </tr>
-        <tr>
-          <td class="td1">비밀번호 재확인</td>
-          <td>{{ user.password2 }}</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
         </tr>
         <tr>
           <td class="td1">전화번호</td>
@@ -69,40 +61,30 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
-        <tr class="modify2">
-          <td>&nbsp;</td>
-          <td><a href="{% url 'update' %}">개인정보수정</a></button></td>
+        <tr">
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td class="modify3">
-            <form action="{% url 'delete' %}" method="POST"> <!--어떻게 연결할것?-->
-              {% csrf_token %}
-              <button type="submit">회원탈퇴</button></td>
+          <td>
+            <div class="bt-change"><a href="{% url 'update' %}" style="text-decoration: none;"><small>개인정보수정</small></a></div>
+            <div class="bt-password-change"><a href="{% url 'change_password' %}"style="text-decoration: none;"><small>비밀번호 변경하기</small></a></div>
+            <div class="bt-membership-withdrawal">
+              <form class="withdrawal-box" action="{% url 'delete' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" style="border: none;"><small>회원탈퇴</small></button>
+              </form>
+            </div>
+          </td>
         </tr>
       </table>
-  
-      <!-- <label for="nickname">별명</label>
-          <input type="text" id="nickname"> -->
-      <!-- 'username': '아이디',
-      'email': '이메일주소',
-      'password1': '비밀번호',
-      'password2': '비밀번호 재확인',
-      'nickname': '별명',
-      'phone_number': '전화번호',
-      'profile_image': '프로필 사진',
-      'status': '가입 목적',
-      'region_big': '도 / 시',
-      'region_small': '시 / 구',
-      간편로그인 정리 -->
-  
+    </div>  
     </div>
-    <script type = "text/javascript">
-      // function maxLengthCheck(object){
-      //     if (object.value.length > object.maxLength) {
-      //         object.value = object.value.slice(0, object.maxLength);
-      //         }   
-      //     }
-  </script>
+  </div>
+    <br>
+    <br>
+    <br>
+
 
 {% endblock %}
