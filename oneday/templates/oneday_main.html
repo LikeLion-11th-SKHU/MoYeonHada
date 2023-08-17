@@ -73,7 +73,10 @@
       <div>
         <div class="oneday-content-hashtag"></div>
           {% for hashtag in onedays.hashtags.all %}
-              #{{ hashtag.tag }}{% if not forloop.last %}, {% endif %}
+              {% if hashtag.tag|length == 0 %}
+              {% else %}
+                #{{ hashtag.tag }}{% if not forloop.last %}, {% endif %}
+              {% endif %}
           {% endfor %}
         </div>
       </div>
@@ -84,7 +87,7 @@
   </div>
 
   {% for hashtag in all_hashtags %}
-  <a href="{% url 'search_by_hashtag' hashtag.tag %}" class="btn btn-primary">#{{ hashtag.tag }}</a>
+    <a href="{% url 'search_by_hashtag' hashtag.tag %}" class="btn btn-primary">#{{ hashtag.tag }}</a>
   {% endfor %}
 </div>
 
