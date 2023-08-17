@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/t_u.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/s_u.css' %}" />
 {% endblock css %}
 
 {% block content %}
@@ -20,7 +20,7 @@
   <div class="create-box mx-auto">
     <h4 class="mb-2">모연 선생님 글 수정하기</h4>
     <!--글 작성 폼 시작-->
-    <form action="{% url 't_u' teacher.pk %}" method="POST" enctype="multipart/form-data" class="validation-form" novalidate>
+    <form action="{% url 's_u' student.pk %}" method="POST" enctype="multipart/form-data" class="validation-form" novalidate>
       {% csrf_token %}
       <div class="create-form">
 

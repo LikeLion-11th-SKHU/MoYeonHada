@@ -2,25 +2,25 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/t_u.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/s_c.css' %}" />
 {% endblock css %}
 
 {% block content %}
-<head>
-    <style>
-      body {
-        background: #f1f1f1;
-      }
-    </style>
-</head>
 
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
 
 
 <div class="create">
   <div class="create-box mx-auto">
-    <h4 class="mb-2">모연 선생님 글 수정하기</h4>
+    <h4 class="mb-2">모연 배움이 글 작성하기</h4>
     <!--글 작성 폼 시작-->
-    <form action="{% url 't_u' teacher.pk %}" method="POST" enctype="multipart/form-data" class="validation-form" novalidate>
+    <form method="POST" enctype="multipart/form-data" class="validation-form" novalidate>
       {% csrf_token %}
       <div class="create-form">
 
@@ -57,6 +57,7 @@
           <span style="color:#FD6F22; font-weight: bold;">진행 지역</span>
           {{ form.region }}
           <span>에서 진행해요</span>
+          
         </div>
 
         <div class="content">
@@ -77,6 +78,7 @@
     <!--글 작성 폼 끝-->
   </div>
 </div>
+
 
 
 {% endblock %}

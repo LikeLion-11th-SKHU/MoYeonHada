@@ -1,11 +1,11 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
-from .models import Teacher, TeacherComment
+from .models import Student, StudentComment
 
 
-class TeacherForm(forms.ModelForm):
+class StudentForm(forms.ModelForm):
     class Meta:
-        model = Teacher
+        model = Student
         fields = ['title', 'field', 'number', 'period1', 'period2', 'region', 'content', 'photo']
         exclude = ('user',)
         
@@ -29,9 +29,9 @@ class TeacherForm(forms.ModelForm):
     
 
 
-class TeacherCommentForm(forms.ModelForm):
+class StudentCommentForm(forms.ModelForm):
     class Meta:
-        model = TeacherComment
+        model = StudentComment
         fields = ('content',)
         
         labels = {
