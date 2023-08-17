@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/t_main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/s_main.css' %}" />
 {% endblock css %}
 
 {% block content %}
@@ -21,46 +21,46 @@
 
   <div class="teacher-container mx-auto">
 
-    <span class="tp-title">모연 선생님</span>
+    <span class="tp-title">모연 배움이</span>
     <div class="teacher-top">
       <div class="teacher-path">
         <div class="teacher-path-icon">
           <img src="{% static 'image/homeIcon.png' %}">
         </div>
         <div class="teacher-path-letter">
-          <span>메인 > 모연 선생님</span>
+          <span>메인 > 모연 배움이</span>
         </div>
       </div>
       <div class="teacher-create">
-        <a class="teacher-create-link" href="{% url 't_c' %}">글쓰기</a>
+        <a class="teacher-create-link" href="{% url 's_c' %}">글쓰기</a>
       </div>
     </div>
 
     <div class="teacher-content-all">
-      {% for teachers in teachers.all %}
+      {% for students in students.all %}
       <div class="teacher-content-one">
 
         <div class="t-img-letters">
           <div class="teacher-content-img">
-            {% if teachers.photo %}
-            <img src="{{ teachers.photo.url }}" alt="iamge" width="150" height="150">
+            {% if students.photo %}
+            <img src="{{ students.photo.url }}" alt="iamge" width="150" height="150">
             {% endif %}
           </div>
           <div class="teacher-content-letter">
             <div class="teacher-content-field">
-              <span>{{ teachers.field }}</span>
+              <span>{{ students.field }}</span>
             </div>
             <div class="teacher-content-region">
-              <span><img src="{% static 'image/mapIcon.png' %}">{{ teachers.region }}</span>
+              <span><img src="{% static 'image/mapIcon.png' %}">{{ students.region }}</span>
             </div>
             <div class="teacher-content-number">
-              <span><img src="{% static 'image/followicon.png' %}">모집 인원 {{ teachers.number }}</span>
+              <span><img src="{% static 'image/followicon.png' %}">모집 인원 {{ students.number }}</span>
             </div>
           </div>
         </div>
 
         <div class="teacher-content-title">
-          <span class="tt-title"><a href="{% url 't_r' teachers.id %}">{{ teachers.title }}</a></span>
+          <span class="tt-title"><a href="{% url 's_r' students.id %}">{{ students.title }}</a></span>
         </div>
       </div>
       {% endfor %}

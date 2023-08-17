@@ -175,7 +175,6 @@ SUMMERNOTE_CONFIG = {
     'iframe': False,  
     'summernote': {
         'width': '100%',
-        'height': '300px',
         'toolbar': [
             ['style', ['style']],
             ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -185,3 +184,7 @@ SUMMERNOTE_CONFIG = {
         ],
     },
 }
+
+
+#로그인 url
+LOGIN_URL = '/home/login/'
