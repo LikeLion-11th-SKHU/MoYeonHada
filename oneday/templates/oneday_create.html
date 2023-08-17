@@ -13,14 +13,99 @@
       }
     </style>
 </head>
-
+<div class ="oneday_create mx-auto">
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
+  <h2>모 집 하 기</h2>
   <table>
-    {{ form.as_table }}
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+   
+    <div class ="create-main">
+      <div class="o_title"> 
+          <span style="color: #fd6f22;"><label for="{{ form.title.label }}" style="color: #fd6f22;" >{{ form.title.label }}</label></span>
+    
+          {{ form.title }}
+         
+      </div>
+
+    <div class="o_field"> 
+        <span style="color: #fd6f22;"><label for="{{ form.field.label }}" style="color: #fd6f22;" >{{ form.field.label }}</label></span>
+      <div class="o_category_1">
+        <label for ="id_field_0">
+          <input type ="radio" name="field" value="공예" required id = "id_field_0">
+          <span>공예</span>
+        </label>
+
+        <label for ="id_field_1">
+          <input type ="radio" name="field" value="요리" required id = "id_field_1">
+          <span>요리</span>
+        </label>
+
+        <label for ="id_field_2">
+          <input type ="radio" name="field" value="미술" required id = "id_field_2">
+         <span>미술</span>
+        </label>
+      </div>
+
+        <br>
+
+      <div class="o_category_2">
+        <label for ="id_field_3">
+          <input type ="radio" name="field" value="운동" required id = "id_field_3">
+          <span>운동</span>
+        </label>
+
+        <label for ="id_field_4">
+          <input type ="radio" name="field" value="음악" required id = "id_field_4">
+          <span>음악</span>
+        </label>
+
+        <label for ="id_field_5">
+          <input type ="radio" name="field" value="기타" required id = "id_field_5">
+          <span>기타</span>
+        </label>
+      </div>
+    </div>
+
+
+
+        <div class="o_number"> 
+          <span style="color: #fd6f22;">{{ form.number.label }}</span>
+          {{ form.number }} <span>명을 모집해요</span>
+        </div>
+      
+        <div class="o_period">
+          <span style="color: #fd6f22;">{{ form.period1.label }}</span>
+          {{ form.period1 }} <span>부터</span> {{ form.period2.label }} {{ form.period2 }} <span>까지 진행돼요</span>
+        </div>
+      
+      <div class="o_region">
+        <span style="color: #fd6f22;">{{ form.region.label }}</span>
+        {{ form.region }} <span>에서 진행해요</span>
+      </div>
+
+      <div class="o_content">
+        <span style="color: #fd6f22;">{{ form.content.label }}</span>
+        {{ form.content }}
+      </div>
+      
+      <div class="o_photo">
+        <span style="color: #fd6f22;"><label for="{{ form.photo.label }}" style="color: #fd6f22;" >{{ form.photo.label }}</label></span>
+        {{ form.photo }}
+      </div>
+
+      <div class="o_hashtag">
+        <span style="color: #fd6f22;"><label for="{{ form.hashtag_input.label }}"></label>{{ form.hashtag_input.label }}</label></span>
+        {{ form.hashtag_input }}  
+      </div>
+</div>
+
+      <button class="create-btn mx-auto" type="submit">글 작성</button>
+    </form>
   </table>
-  <button type="submit">글 작성</button>
 </form>
+</div>
 {% endblock %}
 
 

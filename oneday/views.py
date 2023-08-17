@@ -1,22 +1,31 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import OnedayCreate, OnedayApply, OnedayComment, Review, Hashtag
-from .forms import OnedayCreateForm, OnedayApplyForm, OnedayCommentForm, ReviewForm
+from .models import OnedayCreate, OnedayApply, OnedayComment, OnedayReview, OnedayHashtag
+from .forms import OnedayCreateForm, OnedayApplyForm, OnedayCommentForm, OnedayReviewForm
 from django.urls import reverse
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.http import JsonResponse
+from django.db.models import Count
+
 
 # Create your views here.
 
 def oneday_main(request):
     onedays = OnedayCreate.objects.all()
-
+    
+    # 사용되는 해시태그만 가져옵니다.
+    all_hashtags = OnedayHashtag.objects.annotate(num_onedays=Count('onedaycreate')).filter(num_onedays__gt=0)
+    
     # 검색 쿼리를 확인합니다.
     query = request.GET.get('q')
     if query:
         # 검색어에 따라 onedays 쿼리셋을 필터링합니다.
         onedays = onedays.filter(title__icontains=query)
 
-    content = {'onedays': onedays}
+    content = {
+        'onedays': onedays,
+        'all_hashtags': all_hashtags  # 템플릿으로 해시태그 전달
+    }
     return render(request, 'oneday_main.html', content)
 
 def oneday_create(request):
@@ -32,9 +41,9 @@ def oneday_create(request):
         if hashtag_text:
             hashtags = hashtag_text.split()  
             for tag in hashtags:
-                hashtag, created = Hashtag.objects.get_or_create(tag=tag)
+                hashtag, created = OnedayHashtag.objects.get_or_create(tag=tag)
                 oneday.hashtags.add(hashtag)
-        return redirect('oneday_read', pk=oneday.pk)
+        return redirect('oneday_main')
 
     else:
         form = OnedayCreateForm()
@@ -49,51 +58,69 @@ def oneday_read(request, pk):
     if request.method == 'POST':
         if request.user.is_authenticated:
             if request.user == oneday.user:
-               oneday.delete()
-               return redirect('oneday_main')
+                hashtags_in_oneday = oneday.hashtags.all()  # 해시태그 목록 가져오기
+                oneday.delete()  # 게시글 삭제
+
+                # 게시글에서 사용된 해시태그들 중 참조 횟수가 0인 해시태그 삭제
+                for hashtag in hashtags_in_oneday:
+                    if hashtag.onedaycreate_set.count() == 0:  # 해당 해시태그를 참조하는 게시글의 수 확인
+                        hashtag.delete()
+
+                return redirect('oneday_main')
         return redirect('oneday_main')
     else:
         commentform = OnedayCommentForm()
-        reviewform = ReviewForm()  # 리뷰 폼 추가
+        reviewform = OnedayReviewForm()  # 리뷰 폼 추가
         comment = oneday.OnedayComments.all
-        review = oneday.review_set.all
+        review = oneday.OnedayReviews.all
 
         content = {'oneday': oneday, 'commentform':commentform, 'comment':comment, 'reviewform':reviewform, 'review':review}
         return render(request, 'oneday_read.html', content)
     
 
+
+
 def oneday_update(request, pk):
-    oneday = OnedayCreate.objects.get(pk=pk)
+    oneday = get_object_or_404(OnedayCreate, pk=pk)
     
+    # 권한 체크
     if request.user != oneday.user:
+        messages.warning(request, "권한 없음")
         return redirect('oneday_main')
     
     if request.method == 'POST':
-        # 글 삭제 버튼이 눌렸을 경우
-       if 'action' in request.POST and request.POST['action'] == '글 삭제':
-            oneday.delete()
+        if 'action' in request.POST and request.POST['action'] == '글 삭제':
+            hashtags_in_oneday = oneday.hashtags.all()  # 해당 글과 연결된 해시태그 목록 가져오기
+            oneday.delete()  # 게시글 삭제
+
+            # 게시글에서 사용된 해시태그들 중 참조 횟수가 0인 해시태그 삭제
+            for hashtag in hashtags_in_oneday:
+                if hashtag.onedaycreate_set.count() == 0:  # 해당 해시태그를 참조하는 게시글의 수 확인
+                    hashtag.delete()
+
             return redirect('oneday_main')
-       else:
+
+        else:
             form = OnedayCreateForm(request.POST, request.FILES, instance=oneday)
             if form.is_valid():
                 oneday = form.save(commit=False)
-
-                hashtag_text = request.POST.get('hashtag')  # 이 부분을 추가
+                
+                hashtag_text = request.POST.get('hashtag')
                 if hashtag_text:
                     # 기존의 연결된 해시태그를 모두 지운다.
                     oneday.hashtags.clear()
 
                     hashtags = hashtag_text.split()  
                     for tag in hashtags:
-                        hashtag, created = Hashtag.objects.get_or_create(tag=tag)
+                        hashtag, created = OnedayHashtag.objects.get_or_create(tag=tag)
                         oneday.hashtags.add(hashtag)
-
+                        
                 oneday.save()
                 return redirect('oneday_read', pk=oneday.pk)
     else:
         form = OnedayCreateForm(instance=oneday)
 
-    content = {'oneday': oneday, 'form': form, }
+    content = {'oneday': oneday, 'form': form}
     return render(request, 'oneday_update.html', content)
 
 
@@ -126,25 +153,33 @@ def o_comment_create(request, pk):
             comment = commentform.save(commit=False)
             comment.oneday = oneday
             comment.user = request.user
+
+            # 대댓글 로직 추가
+            parent_pk = request.POST.get('parent')
+            if parent_pk:  # 대댓글인 경우
+                parent_comment = OnedayComment.objects.get(pk=parent_pk)
+                comment.parent = parent_comment
+
             comment.save()
         return redirect('oneday_read', oneday.pk)
 
 def o_comment_edit(request, comment_pk):
     comment = get_object_or_404(OnedayComment, pk=comment_pk)
-    
+
+    # 권한 확인
     if request.user != comment.user:
-        return HttpResponseForbidden()
+        return JsonResponse({'status': 'fail', 'error': '권한 없음'})
 
-    if request.method == 'POST':
-        edited_content = request.POST.get('comment_content')
+    if request.method == "POST":
+        new_content = request.POST.get('content')
         
-        if edited_content:  # 이 조건을 추가하여 edited_content가 비어있지 않을 경우에만 수정을 진행합니다.
-            comment.content = edited_content
-            comment.save()
+        # 유효성 검사 추가
+        if not new_content or len(new_content) == 0:
+            return JsonResponse({'status': 'fail', 'error': '댓글 내용이 유효하지 않습니다.'})
         
-        return redirect(reverse('oneday_read', kwargs={'pk': comment.oneday.pk}))
-
-    return render(request, 'oneday_read.html', {'comment': comment})
+        comment.content = new_content
+        comment.save()
+        return JsonResponse({'status': 'ok'})
 
 def o_comment_delete(request, comment_pk):
     comment = OnedayComment.objects.get(pk=comment_pk)
@@ -153,53 +188,60 @@ def o_comment_delete(request, comment_pk):
         comment.delete()
     return redirect(reverse('oneday_read', kwargs={'pk': oneday_pk}))
 
-
-def review_create(request, pk):
-    oneday = get_object_or_404(OnedayCreate, pk=pk)
+def o_review_create(request, review_pk):
+    oneday = get_object_or_404(OnedayCreate, pk=review_pk)
     if request.method == 'POST':
-        reviewform = ReviewForm(request.POST)
+        reviewform = OnedayReviewForm(request.POST)
         if reviewform.is_valid():
             review = reviewform.save(commit=False)
             review.oneday = oneday
             review.user = request.user
             review.save()
-        return redirect('oneday_read', oneday.pk)
-
-def review_edit(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
+        # 리뷰 섹션을 보여주기 위해 URL에 ?view=reviews 파라미터 추가
+        return redirect(reverse('oneday_read', kwargs={'pk': oneday.pk}) + '?view=reviews')
     
+def o_review_edit(request, review_pk):
+    review = get_object_or_404(OnedayReview, pk=review_pk)
+
+    # 권한 확인
     if request.user != review.user:
-        return HttpResponseForbidden()
+        return JsonResponse({'status': 'fail', 'error': '권한 없음'})
 
-    if request.method == 'POST':
-        edited_content = request.POST.get('review_content')
+    if request.method == "POST":
+        new_content = request.POST.get('content')
         
-        if edited_content:  # 이 조건을 추가하여 edited_content가 비어있지 않을 경우에만 수정을 진행합니다.
-            review.content = edited_content
-            review.save()
+        # 유효성 검사 추가
+        if not new_content or len(new_content) == 0:
+            return JsonResponse({'status': 'fail', 'error': '댓글 내용이 유효하지 않습니다.'})
         
-        return redirect(reverse('oneday_read', kwargs={'pk': review.oneday.pk}))
+        review.content = new_content
+        review.save()
+        return JsonResponse({'status': 'ok'})
 
-    return render(request, 'oneday_read.html', {'review': review})
 
-def review_delete(request, review_pk):
-    review = Review.objects.get(pk=review_pk)
+def o_review_delete(request, review_pk):
+    review = OnedayReview.objects.get(pk=review_pk)
     if request.user == review.user:
-        oneday_pk = review.oneday_id 
+        oneday_pk = review.oneday_id  # 댓글이 연결된 oneday의 pk 값
         review.delete()
-    return redirect(reverse('oneday_read', kwargs={'pk': oneday_pk}))
+    # 리뷰 섹션을 보여주기 위해 URL에 ?view=reviews 파라미터 추가
+    return redirect(reverse('oneday_read', kwargs={'pk': oneday_pk}) + '?view=reviews')
 
 
 
 
-def hashtag(request, hashtag=None):
+def o_hashtag(request, hashtag=None):
     if hashtag:
-        hashtag = get_object_or_404(Hashtag, tag=hashtag)
+        hashtag = get_object_or_404(OnedayHashtag, tag=hashtag)
         onedays = OnedayCreate.objects.filter(hashtags=hashtag)
     else:
         onedays = OnedayCreate.objects.all()
     return render(request, 'hashtag.html', {'onedays': onedays})
-    
+
+def search_by_hashtag(request, hashtag):
+    onedays_with_hashtag = OnedayCreate.objects.filter(hashtags__tag=hashtag)
+    return render(request, 'oneday_main.html', {'onedays': onedays_with_hashtag})
+
 def oneday_search(request):
     query = request.GET.get('query')  # 쿼리 문자열에서 검색어 추출
     search_results = []

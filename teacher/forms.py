@@ -33,4 +33,8 @@ class TeacherCommentForm(forms.ModelForm):
     class Meta:
         model = TeacherComment
         fields = ('content',)
+        
+        labels = {
+            'content': ' ',
+        }
 

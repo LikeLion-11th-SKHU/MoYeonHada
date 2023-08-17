@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_create.css' %}" />
 <style>
   body {
     background: #f1f1f1;
@@ -10,26 +10,19 @@
 </style>
 {% endblock css %}
 
-{% block content %}
-<form action="{% url 'oneday_update' oneday.pk %}" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  <table>
-      {{ form.as_table }}
-  </table>
-  <button type="submit">글 작성</button>
-</form>
 
-<!-- 주석처리된 부분
-<div class="oneday mx-auto">
-  <div class="oneday-side bg-light">
-    <nav class="navbar">
-      이게머지..
-    </nav>
+{% block content %}
+  <div class="container box">
+    <div class="oneday_form mx-auto">
+      <h4>모집하기</h4>
+      <p style="font-size: medium;">주황색으로 표시된 칸은 모두 작성해야 회원가입이 가능해요 😆</p>
+      <form action="{% url 'oneday_update' oneday.pk %}" method="POST" enctype="multipart/form-data">
+       {% csrf_token %}
+         <table>
+            {{ form.as_table }}
+         </table>
+        <button type="submit">글 작성</button>
+      </form>  
+    </div>
   </div>
-  
-  <div class="oneday-content">
-    여기는 수정 페이지
-  </div>
-</div>
--->
 {% endblock %}

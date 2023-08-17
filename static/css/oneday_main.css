@@ -1,4 +1,7 @@
 /* 검색바 컨테이너 스타일 */
+
+
+
 .search-container {
     display: flex;
     align-items: center;
@@ -16,7 +19,7 @@
   
   /* 검색 버튼 스타일 */
   .search-button {
-    background-color: #007bff;
+    background-color: #14c047;
     color: #fff;
     border: none;
     border-radius: 5px;

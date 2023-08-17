@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/s_c.css' %}" />
+{% endblock css %}
+
+{% block content %}
+
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+
+<div class="create">
+  <div class="create-box mx-auto">
+    <h4 class="mb-2">모연 배움이 글 작성하기</h4>
+    <!--글 작성 폼 시작-->
+    <form method="POST" enctype="multipart/form-data" class="validation-form" novalidate>
+      {% csrf_token %}
+      <div class="create-form">
+
+        <div class="title">
+          <span style="color:#FD6F22; font-weight: bold;">제목</span>
+          {{ form.title }}
+        </div>
+
+
+        <div class="field">
+          <span style="color:#FD6F22; font-weight: bold;">모집 분야</span>
+          {{ form.field }}
+        </div>
+
+        <div class="number">
+          <span style="color:#FD6F22; font-weight: bold;">모집 인원</span>
+          {{ form.number }}
+          <span> 명을 모집해요</span>
+        </div>
+
+        <div class="period">
+          <span style="color:#FD6F22; font-weight: bold;">모집 기간</span>
+          <div class="period1">
+            {{ form.period1 }}
+            <span>부터</span>
+          </div>
+          <div class="period2">
+            {{ form.period2 }}
+            <span>까지 모집해요</span>
+          </div>
+        </div>
+
+        <div class="region">
+          <span style="color:#FD6F22; font-weight: bold;">진행 지역</span>
+          {{ form.region }}
+          <span>에서 진행해요</span>
+          
+        </div>
+
+        <div class="content">
+          <span style="color:#FD6F22; font-weight: bold;">모집 내용</span>
+          <p><br></p>
+          {{ form.content }}
+        </div>
+
+        <div class="photo">
+          <span style="color:#FD6F22; font-weight: bold;">대표 사진</span>
+          {{ form.photo }}
+        </div>
+      </div>  
+        <button class="create-btn mx-auto" type="submit">글 작성</button>
+      
+
+    </form>
+    <!--글 작성 폼 끝-->
+  </div>
+</div>
+
+
+
+{% endblock %}

@@ -14,11 +14,49 @@
     </style>
 </head>
 
+
+
+
+<div class ="oneday_create mx-auto">
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <table>
-    {{ form.as_table }}
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <h2>신 청 하 기</h2>
+
+    <div class ="create-main">
+      <div class="o_name"> 
+          <span style="color: #fd6f22;">{{ form.name.label }}</span>
+          {{ form.name }} 
+      </div>
+
+
+      <div class="o_phone">
+        <span style="color: #fd6f22;">{{ form.phone1.label }}</span> 
+        {{ form.phone1 }} <span>-</span> {{ form.phone2 }} <span>-</span> {{ form.phone3 }} <span>입니다</span>
+      </div>
+
+
+        <div class="o_people">
+          <span style="color: #fd6f22;">{{ form.people.label }}</span> 
+          {{ form.people }} <span>명이에요</span>
+        </div>
+      
+        <div class="o_memo"> 
+          <span style="color: #fd6f22;">{{ form.memo.label }}</span>
+          {{ form.memo }} 
+        </div>
+    </div>
+      
+      <button type="submit">글 작성</button>
+    </form>
   </table>
-  <button type="submit">글 작성</button>
 </form>
+</div>
 {% endblock %}
+
+
+
+

@@ -5,119 +5,323 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/oneday_read.css' %}" />
 {% endblock css %}
 
 {% block content %}
 <head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
     <style>
       body {
         background: #f1f1f1;
-      } 
+      }
     </style>
 </head>
 
 <!-- <div class = "oneday mx-auto">
   <div class = "oneday-side bg-light">
     <nav class = "navbar">
-      이게머지..
+      이게머지..````
     </nav>
-  </div>
+  </div>`
   
   <div class = "oneday-content">
     여기는 디테일 페이지
   </div>
 </div> -->
+<div class="o_main">
+    <div class = "o_high">
+        <div class="o_photo">
+            {% if oneday.photo %}
+            <img src="{{ oneday.photo.url }}" alt="image" width="150" height="150" border-radius="8px">
+            {% endif %}
+        </div>
+
+        <div class="o_information">
+            <div class="o_field">
+                <span>{{ oneday.field }}</span>
+            </div>
+            <div class="o_title">
+                <span>{{ oneday.title }}</span>
+            </div>
+            <div class="o_region">
+                <span>{{ oneday.region }}</span>
+            </div>
+            <div class="o_number">
+                <span>/{{ oneday.number }}명</span>
+            </div>
+            <div class="">
+                <span>{{ oneday.period1 }} - {{ oneday.period2 }}</span>
+            </div>
+        </div>
+    </div>
 
 
+    <div class="o_r_content">
+        {{ oneday.content|safe }} <br>
+    </div>
 
-{% if oneday.photo %}
-<img src="{{ oneday.photo.url }}" alt="image" width="200" height="200">
-{% endif %}
+    <div class="o_hashtag_main">
+        <div class="o_hashtag">
+            {% if oneday.hashtags.all %}
+            <span>
+                {% for hashtag in oneday.hashtags.all %}
+                    #{{ hashtag.tag }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    
+    {% endif %}
+</div>
 
-{{ oneday.field }} <br>
-{{ oneday.title }} <br>
-{{ oneday.region }} <br>
-/{{ oneday.number }}명 <br>
-{{ oneday.period1 }} - {{ oneday.period2 }} <br>
-{{ oneday.content|safe }} <br>
-{% if oneday.hashtags.all %}
-    <p>
-    {% for hashtag in oneday.hashtags.all %}
-        #{{ hashtag.tag }}{% if not forloop.last %}, {% endif %}
-    {% endfor %}
-    </p>
-{% endif %}
 
 <!-- 작성자만 수정/삭제 가능 -->
-{% if request.user == oneday.user %}
-<br> <a href="{% url 'oneday_update' oneday.pk %}">글 수정</a>
+<div class="o_option_main">
+    {% if request.user == oneday.user %}
+    <div class="o_option">
+        
+            <a class="o_update" href="{% url 'oneday_update' oneday.pk %}">글 수정</a>
+        
+    </div>
+    <div class="o_option">
+        <div >
+            <form action="{% url 'oneday_update' oneday.pk %}" method="POST">
+                {% csrf_token %}
+                <!-- 바꿔야 됨 -->
+                <div class ="o_delete">
+                    <input type="submit" name="action" value="글 삭제">
+                </div>
+            </form>
+        </div>
+    </div>
+        {% else %}
+    <div class="o_option">
+        <div >
+            <a class="o_apply" href="{% url 'oneday_apply' oneday.pk %}">신청하기</a>
+        </div>
+    </div>
+    <div class="o_option">
+        <div >
+            <a class="o_bookmark">찜하기</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
 
-<form action="{% url 'oneday_update' oneday.pk %}" method="POST" >
+<div class="o_show_main">
+    <div class="o_show">
+        <div >
+            <a class="show-comments" href="#" id="show-comments">댓글 보기</a>
+        </div>
+    </div>
+    <div class="o_show">
+        <div >
+            <a class="show-reviews" href="#" id="show-reviews">리뷰 보기</a>
+        </div>
+    </div>
+</div>
+
+<div id="comments-section">
+  <p>댓글</p>
+  댓글 {{ comment|length }}개
+
+  <form action="{% url 'o_comment_create' oneday.pk %}" method="POST">
     {% csrf_token %}
-    <input type="submit" name="action" value="글 삭제">
-</form>
-{% else %}
-<a href="{% url 'oneday_apply' oneday.pk %}">신청하기</a>
-{% endif %}
+    {{ commentform }}
+    <input type="submit" value="댓글등록">
+  </form>
+  
+  <ul>
+    {% for comments in comment %}
+        <li>
+           <!-- 댓글 작성자의 프로필 이미지 표시 -->
+           {% if comments.user.profile_image %}
+            <img src="{{ comments.user.profile_image.url }}" alt="{{ comments.user.username }}'s profile image" width="50" style="border-radius: 30%;">
+           {% endif %} 
+
+            <!-- 댓글 내용 표시 -->
+            <span id="comment-text-{{ comments.pk }}">{{ comments.content }}</span>
+
+            <!-- 작성자 이름 표시 -->
+            {% if comments.user == oneday.user %}
+            (작성자)
+            {% endif %}
+
+            <!-- 댓글 작성자 이름 표시 -->
+             {{ comments.user.username }}
+             
+
+            <!-- 수정 및 삭제 버튼을 댓글 작성자에게만 표시 -->
+            {% if request.user == comments.user %}
+                <form action="{% url 'o_comment_delete' comments.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="삭제">
+                </form>
+                <button class="edit-btn" data-comment-id="{{ comments.pk }}">편집</button>
+                <input type="text" id="comment-input-{{ comments.pk }}" value="{{ comments.content }}" style="display:none;">
+                <button class="save-btn" data-comment-id="{{ comments.pk }}" style="display:none;">저장</button>
+            {% endif %}
+
+            <!-- 대댓글 작성 폼 -->
+            <button class="reply-btn">대댓글 작성</button>
+            <div class="comment-form" style="display:none;">
+                <form method="post" action="{% url 'o_comment_create' oneday.pk %}">
+                    {% csrf_token %}
+                    <i class="bi bi-arrow-return-right"></i>{{ commentform.as_p }}
+                    <input type="hidden" name="parent" value="{{ comments.pk }}"> <!-- 대댓글의 부모 댓글 ID -->
+                    <button type="submit">대댓글 작성</button>
+                </form>
+            </div>
+
+            <!-- 대댓글 표시 -->
+            <ul>
+                {% for reply in comments.parent_comments.all %}
+                    <li>
+                        <!-- 대댓글 작성자의 프로필 이미지 표시-->
+                        {% if reply.user.profile_image %}
+                            <img src="{{ reply.user.profile_image.url }}" alt="{{ reply.user.username }}'s profile image" width="50" style="border-radius: 30%;">
+                        {% endif %}
+                        {{ reply.content }}
+                        <!-- 대댓글의 대댓글이 필요하다면 재귀적인 구조로 추가 가능 -->
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+<div id="reviews-section">
+  <p>리뷰</p>
+  리뷰 {{ review|length }}개
+  
+  <form action="{% url 'o_review_create' oneday.pk %}?view=reviews" method="POST">
+    {% csrf_token %}
+    {{ reviewform }}
+    <input type="submit" value="리뷰등록">
+  </form>
+  
+  <ul>
+    {% for reviews in review %}
+        <li>
+            <!-- 리뷰 작성자의 프로필 이미지 표시 -->
+           {% if reviews.user.profile_image %}
+           <img src="{{ reviews.user.profile_image.url }}" alt="{{ reviews.user.username }}'s profile image" width="50" style="border-radius: 30%;">
+            {% endif %} 
+
+
+            <!-- 리뷰 내용 표시 (모든 사용자에게 표시) -->
+            <span id="review-text-{{ reviews.pk }}">{{ reviews.content }}</span>
+
+            <!-- 작성자 이름 표시 -->
+            {% if reviews.user == oneday.user %}
+                (작성자)
+            {% endif %}
+
+            <!-- 리뷰 작성자 이름 표시 -->
+            {{ reviews.user.username }}
+
+            <!-- 수정 및 삭제 버튼을 리뷰 작성자에게만 표시 -->
+            {% if request.user == reviews.user %}
+                <form action="{% url 'o_review_delete' reviews.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="삭제">
+                </form>
+                <button class="edit-btn" data-review-id="{{ reviews.pk }}">편집</button>
+                <input type="text" id="review-input-{{ reviews.pk }}" value="{{ reviews.content }}" style="display:none;">
+                <button class="save-btn" data-review-id="{{ reviews.pk }}" style="display:none;">저장</button>
+            {% endif %}
+
+            
+        </li>
+    {% endfor %}
+    </ul>
+
+</div>
 
 
 
 
-<hr>
-<p>댓글</p>
-댓글 {{ comment|length }}개
 
-<form action="{% url 'o_comment_create' oneday.pk %}" method="POST">
-  {% csrf_token %}
-  {{ commentform }}
-  <input type="submit" value="댓글등록">
-</form>
 
-<ul>
-  {% for comments in comment %}
-    <li>{{ comments.user }} - {{ comments.content }}
-      {% if request.user == comments.user %}
-      <form action="{% url 'o_comment_delete' comments.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="삭제">
-      </form>
 
-      <!-- 수정 버튼 추가 -->
-      <form method="GET" action="{% url 'o_comment_edit' comments.pk %}">
-        <input type="submit" value="수정">
-      </form>
 
-    {% endif %}
-    </li>
-{% endfor %}
-</ul>
 
-<p>리뷰</p>
-댓글 {{ review|length }}개
+<script>
+$(document).ready(function() {
+    // 댓글 및 리뷰 수정 기능
+    function setupEditAndSave(btnClass, textClass, ajaxUrl, idData) {
+        $(btnClass).on('click', function() {
+            var id = $(this).data(idData);
+            var text = $(textClass + id).text();
 
-<form action="{% url 'review_create' oneday.pk %}" method="POST">
-  {% csrf_token %}
-  {{ reviewform }}
-  <input type="submit" value="리뷰등록">
-</form>
+            var edit_field = '<input type="text" id="edit-field-' + id + '" value="' + text + '">';
+            edit_field += '<button class="save-btn" data-' + idData + '="' + id + '">저장</button>';
 
-<ul>
-  {% for reviews in review %}
-    <li>{{ reviews.user }} - {{ reviews.content }}
-      {% if request.user == reviews.user %}
-      <form action="{% url 'review_delete' reviews.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="삭제">
-      </form>
+            $(textClass + id).html(edit_field);
+        });
 
-      <!-- 수정 버튼 추가 -->
-      <form method="GET" action="{% url 'review_edit' reviews.pk %}">
-        <input type="submit" value="수정">
-      </form>
+        $(document).on('click', '.save-btn', function() {
+            var id = $(this).data(idData);
+            var updated_text = $('#edit-field-' + id).val();
 
-    {% endif %}
-    </li>
-{% endfor %}
-</ul>
+            $.ajax({
+                url: ajaxUrl + id + '/edit',
+                method: 'POST',
+                data: {
+                    'content': updated_text,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status == 'ok') {
+                        $(textClass + id).text(updated_text);
+                    } else {
+                        alert('에러가 발생했습니다.');
+                    }
+                }
+            });
+        });
+    }
+
+    // 댓글 수정 및 저장 설정
+    setupEditAndSave('.edit-btn', '#comment-text-', '/oneday/o_comment/', 'comment-id');
+
+    // 리뷰 수정 및 저장 설정
+    setupEditAndSave('.edit-btn', '#review-text-', '/oneday/o_review/', 'review-id');
+
+    // 대댓글 작성 폼 토글
+    $('.reply-btn').on('click', function() {
+        // 대댓글 작성 폼을 해당 댓글 아래에 생성
+        $(this).parent().find('.comment-form').toggle();
+    });
+
+    // 댓글 및 리뷰 보기 설정
+    // 현재 URL의 파라미터를 검사하여 리뷰 섹션이 활성화되어 있다면 보여줍니다.
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('view') === 'reviews') {
+        $('#reviews-section').show();
+        $('#comments-section').hide();
+    } else {
+        $('#reviews-section').hide();
+        $('#comments-section').show();
+    }
+
+    $('#show-comments').on('click', function() {
+        // 페이지 이동 없이 현재 URL에 파라미터 추가
+        history.pushState({}, '', '?view=comments');
+        $('#comments-section').show();
+        $('#reviews-section').hide();
+    });
+
+    $('#show-reviews').on('click', function() {
+        // 페이지 이동 없이 현재 URL에 파라미터 추가
+        history.pushState({}, '', '?view=reviews');
+        $('#reviews-section').show();
+        $('#comments-section').hide();
+    });
+});
+</script>
 {% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/s_r.css' %}" />
+{% endblock css %}
+
+{% block content %}
+
+<head>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+
+<div class="tr-box mx-auto">
+  <div class="tr-bc">
+    <div class="top mx-auto">
+      <div class="tr-img">
+        {% if student.photo %}
+        <img src="{{ student.photo.url }}" alt="image" width="200" height="200">
+        {% endif %}
+      </div>
+      <div class="tr-letters">
+        <div class="tr-field">
+          <span>{{ student.field }}</span>
+        </div>
+        <div class="tr-title">
+          <span>{{ student.title }}</span>
+        </div>
+        <div class="tr-region">
+          <img src="{% static 'image/mapIcon.png' %}">
+          <span>{{ student.region }}</span>
+        </div>
+        <div class="tr-number">
+          <img src="{% static 'image/followicon.png' %}">
+          <span>{{ student.number }}</span>
+        </div>
+        <div class="tr-period">
+          <img src="{% static 'image/calicon.png' %}">
+          <span>{{ student.period1 }} - {{ student.period2 }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="tr-content">
+      {{ student.content|safe }}
+    </div>
+  </div>
+
+
+
+  <!-- 작성자만 수정/삭제 가능 -->
+  <div class="tr-btn">
+    <div class="tr-u">
+      {% if request.user == student.user %}
+      <a href="{% url 's_u' student.pk %}">글 수정</a>
+      {% endif %}
+    </div>
+    <div class="tr-d">
+      {% if request.user == student.user %}
+      <form action="{% url 's_r' student.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="글 삭제">
+      </form>
+      {% endif %}
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="tr-comment">
+    <div class="tr-ctop">
+      <span>댓글</span>
+
+      <form action="{% url 's_comment_create' student.pk %}" method="POST">
+        {% csrf_token %}
+        {{ scommentform }}
+        <input class="sr-cinput" type="submit" value="댓글등록">
+      </form>
+    </div>
+
+    <div class="tr-cnb">
+      댓글 {{ comment|length }}개
+    </div>
+
+    <div class="tr-cmt">
+        <div class="tr-cuser">
+          {% for comments in comment %}
+          <!-- 댓글 작성자의 프로필 이미지 표시 -->
+          {% if comments.user.profile_image %}
+          <img src="{{ comments.user.profile_image.url }}" alt="{{ comments.user.username }}'s profile image" width="50"
+            style="border-radius: 100%; width:30; height:30;">
+          {% endif %}
+          {{comments.user}} <br>
+
+        {{comments.content}} <br>
+        {% if request.user == comments.user %}
+        <form action="{% url 't_comment_delete' comments.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="삭제">
+        </form>
+        {% endif %}
+        {% endfor %}  
+        </div>
+
+
+    </div>
+  </div>
+
+
+</div>
+
+
+
+{% endblock %}

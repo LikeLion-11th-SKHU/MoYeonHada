@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Teacher, TeacherComment
 from .forms import TeacherForm, TeacherCommentForm
 from django.urls import reverse
@@ -10,6 +11,8 @@ def t_main(request):
     content = {'teachers':teachers}
     return render(request, 't_main.html', content)
 
+
+@login_required
 def t_c(request):
     if request.method == 'POST':
         form = TeacherForm(request.POST, request.FILES)
@@ -41,11 +44,14 @@ def t_r(request, pk):
         return render(request, 't_r.html', content)
     
 
+
 def t_u(request, pk):
     teacher = Teacher.objects.get(pk=pk)
+    if request.user != teacher.user:
+        return redirect('t_main')
     if request.user == teacher.user:
         if request.method == 'POST':
-            form = TeacherCommentForm(request.POST, request.FILES, instance=teacher)
+            form = TeacherForm(request.POST, request.FILES, instance=teacher)
             if form.is_valid():
                 form.save()
                 return redirect('t_r', pk=teacher.pk)
@@ -57,6 +63,7 @@ def t_u(request, pk):
         return redirect('t_main')
 
 
+@login_required
 def t_comment_create(request,pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'POST':
@@ -67,6 +74,7 @@ def t_comment_create(request,pk):
             comment.user = request.user
             comment.save()
         return redirect('t_r', teacher.pk)
+
 
 def t_comment_delete(request, comment_pk):
     comment = TeacherComment.objects.get(pk=comment_pk)

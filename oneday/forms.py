@@ -1,14 +1,14 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
-from .models import OnedayCreate, OnedayApply, OnedayComment, Review, Hashtag
+from .models import OnedayCreate, OnedayApply, OnedayComment, OnedayReview, OnedayHashtag
+from django.db import models
 
 
 class OnedayCreateForm(forms.ModelForm):
     hashtag_input = forms.CharField(
-        label='해시태그', 
+        label='#', 
         required=False, 
-        help_text='해시태그를 쉼표로 구분해서 입력하세요',
-        widget=forms.TextInput(attrs={'placeholder': '#예시'})
+        widget=forms.TextInput(attrs={'placeholder': '#예시, #예시2'})
     )  # 새로운 필드 추가
 
     class Meta:
@@ -17,11 +17,11 @@ class OnedayCreateForm(forms.ModelForm):
         exclude = ('user', 'hashtags')
 
         labels = {
-            'title': '제목',
+            'title': '글 제목',
             'field': '모집 분야',
             'number': '모집 인원',
-            'period1': '모집 기간1',
-            'period2': '모집 기간2',
+            'period1': '모집 기간',
+            'period2': '',
             'region': '진행 지역',
             'content': '모집 내용',
             'photo': '대표 사진',
@@ -51,20 +51,22 @@ class OnedayCreateForm(forms.ModelForm):
             name = name.strip()
             if name.startswith("#"):
                 name = name[1:]
-            hashtag, created = Hashtag.objects.get_or_create(tag=name)
+            hashtag, created = OnedayHashtag.objects.get_or_create(tag=name)
             instance.hashtags.add(hashtag)
         return instance
     
 class OnedayApplyForm(forms.ModelForm):
     class Meta:
         model = OnedayApply
-        fields = ['name', 'phone', 'people', 'memo']
+        fields = ['name', 'phone1', 'phone2' , 'phone3' , 'people', 'memo']
         exclude = ('user',)
         
         labels = {
             'name': '이름',
-            'phone': '전화번호',
-            'people': '지원 인원',
+            'phone1': '전화번호',
+            'phone2': '전화번호2',
+            'phone3': '전화번호3',
+            'people': '인원',
             'memo': '메모',
         }
         
@@ -73,11 +75,18 @@ class OnedayApplyForm(forms.ModelForm):
         }
 
 class OnedayCommentForm(forms.ModelForm):
-    class Meta:
-        model = OnedayComment
-        fields = ('content',)
+    parent = forms.ModelChoiceField(
+        queryset=OnedayComment.objects.all(),
+        widget=forms.HiddenInput(),
+        required=False
+    )
 
-class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Review
-        fields = ('content',)
+        model = OnedayComment 
+        fields = ['content', 'parent']
+
+
+class OnedayReviewForm(forms.ModelForm):
+       class Meta:
+        model = OnedayReview
+        fields = ['content']

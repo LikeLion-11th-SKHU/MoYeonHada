@@ -2,78 +2,120 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/t_main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/t_r.css' %}" />
 {% endblock css %}
 
 {% block content %}
+
 <head>
-    <style>
-      body {
-        background: #f1f1f1;
-      }
-    </style>
+  <style>
+    body {
+      background: #f1f1f1;
+    }
+  </style>
 </head>
 
-<!-- <div class = "teacher mx-auto">
-  <div class = "teacher-side bg-light">
-    <nav class = "navbar">
-      이게머지..
-    </nav>
+
+<div class="tr-box mx-auto">
+  <div class="tr-bc">
+    <div class="top mx-auto">
+      <div class="tr-img">
+        {% if teacher.photo %}
+        <img src="{{ teacher.photo.url }}" alt="image" width="200" height="200">
+        {% endif %}
+      </div>
+      <div class="tr-letters">
+        <div class="tr-field">
+          <span>{{ teacher.field }}</span>
+        </div>
+        <div class="tr-title">
+          <span>{{ teacher.title }}</span>
+        </div>
+        <div class="tr-region">
+          <img src="{% static 'image/mapIcon.png' %}">
+          <span>{{ teacher.region }}</span>
+        </div>
+        <div class="tr-number">
+          <img src="{% static 'image/followicon.png' %}">
+          <span>{{ teacher.number }}</span>
+        </div>
+        <div class="tr-period">
+          <img src="{% static 'image/calicon.png' %}">
+          <span>{{ teacher.period1 }} - {{ teacher.period2 }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="tr-content">
+      {{ teacher.content|safe }}
+    </div>
   </div>
-  
-  <div class = "teacher-content">
-    여기는 디테일 페이지
-  </div>
-</div> -->
 
 
 
-{% if teacher.photo %}
-<img src="{{ teacher.photo.url }}" alt="image" width="200" height="200">
-{% endif %}
-
-{{ teacher.field }} <br>
-{{ teacher.title }} <br>
-{{ teacher.region }} <br>
-/{{ teacher.number }}명 <br>
-{{ teacher.period1 }} - {{ teacher.period2 }} <br>
-{{ teacher.content|safe }} <br>
-
-
-<!-- 작성자만 수정/삭제 가능 -->
-{% if request.user == teacher.user %}
-<br> <a href="{% url 't_u' teacher.pk %}">글 수정</a>
-{% endif %}
-{% if request.user == teacher.user %}
-<form action="{% url 't_r' teacher.pk %}" method="POST" >
-    {% csrf_token %}
-    <input type="submit" value="글 삭제" >
-</form>
-{% endif %}
-
-
-
-
-<hr>
-<p>댓글</p>
-댓글 {{ comment|length }}개
-
-<form action="{% url 't_comment_create' teacher.pk %}" method="POST">
-  {% csrf_token %}
-  {{ commentform }}
-  <input type="submit" value="댓글등록">
-</form>
-
-<ul>
-  {% for comments in comment %}
-    <li>{{comments.user}} - {{comments.content}}
-      {% if request.user == comments.user %}
-      <form action="{% url 't_comment_delete' comments.pk %}" method="POST">
+  <!-- 작성자만 수정/삭제 가능 -->
+  <div class="tr-btn">
+    <div class="tr-u">
+      {% if request.user == teacher.user %}
+      <a href="{% url 't_u' teacher.pk %}">글 수정</a>
+      {% endif %}
+    </div>
+    <div class="tr-d">
+      {% if request.user == teacher.user %}
+      <form action="{% url 't_r' teacher.pk %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="삭제">
+        <input type="submit" value="글 삭제">
       </form>
       {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="tr-comment">
+    <div class="tr-ctop">
+      <span>댓글</span>
+
+      <form action="{% url 't_comment_create' teacher.pk %}" method="POST">
+        {% csrf_token %}
+        {{ commentform }}
+        <input class="tr-cinput" type="submit" value="댓글등록">
+      </form>
+    </div>
+
+    <div class="tr-cnb">
+      댓글 {{ comment|length }}개
+    </div>
+
+    <div class="tr-cmt">
+        <div class="tr-cuser">
+          {% for comments in comment %}
+          <!-- 댓글 작성자의 프로필 이미지 표시 -->
+          {% if comments.user.profile_image %}
+          <img src="{{ comments.user.profile_image.url }}" alt="{{ comments.user.username }}'s profile image" width="50"
+            style="border-radius: 100%; width:30; height:30;">
+          {% endif %}
+          {{comments.user}} <br>
+
+        {{comments.content}} <br>
+        {% if request.user == comments.user %}
+        <form action="{% url 't_comment_delete' comments.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="삭제">
+        </form>
+        {% endif %}
+        {% endfor %}  
+        </div>
+
+
+    </div>
+  </div>
+
+
+</div>
+
+
+
 {% endblock %}

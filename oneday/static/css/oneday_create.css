@@ -2,6 +2,42 @@
   display: flex;
   width: 67%
 }
+
+
+
+.create-main {
+  align-items: flex-start;
+  display: flex;
+  padding: 9%;
+  flex-direction: column;
+}
+
+.o_name, .o_phone, .o_people, .o_memo, .o_title, .o_field, .o_number, .o_period, .o_region, .o_photo, .o_hashtag {
+  display: flex;
+  margin-top: 7%;
+  margin-bottom: 10%;
+}
+
+
+
+.oneday_create {
+  max-width: 750px;
+  margin-top: 80px;
+  margin-bottom: 80px;
+  padding: 32px;
+  border-radius:10px;
+  box-shadow: 0px 8px 20px 0 rgba(0, 0, 0, 0.18);
+  background-color: #fff;
+
+}
+
+.oneday_form {
+  max-width: 680px;
+  margin-top: 80px;
+  padding: 32px;
+  background: #fff;
+}
+
 .oneday-side {
   width: 30%;
 }
@@ -11,10 +47,133 @@
   width: 70%;
 }
 
+.o_field {
+  display: flex;          
+  align-items: center;    /* 세로 방향 중앙에 위치 */
+  gap: 10px;              /* 라벨과 라디오 버튼들 사이의 간격 설정 */
+}
+
+.o_category_1, .o_category_2 {
+  display: flex;
+  gap: 10px;
+}
+
+
+span {
+  font-size: 20px;
+}
+
+.o_content {
+  width: 100%;
+}
+
+#id_period1, #id_period2 {
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+
+.o_memo {
+  width: 100%;
+}
+
+.o_title input {
+  width : 15vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+.o_number input {
+  width : 10vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+
+.o_region input {
+  width : 10vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+.o_hashtag input {
+  width : 10vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+
+/* 신청하기 */
+.o_name input {
+  width : 10vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+
+.o_phone input {
+  width : 5vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+.o_people input {
+  width : 10vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+.o_memo input {
+  width : 10vw;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  border-color: transparent;
+}
+
+button{
+  align-items: center;
+  border-color: transparent;
+  color: #fff; 
+  background-color:#f77c39ce;
+  font-size: 18px;
+  border-radius: 20px;
+  height: 45px;
+  width: 120px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+}
+
+button:hover {
+  background-color: #FD6F22;
+}
+
+/* 신청하기 */
+
+
+
+
+
 /* 반응형 */ 
 @media (max-width: 700px){
   .oneday {
       display: flex;
       width: 100%;
   }
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-group {
+  flex: 1;
+  margin-right: 10px; /* 각 필드 사이의 간격 조절 */
 }
