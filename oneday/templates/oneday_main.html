@@ -15,50 +15,60 @@
   </style>
 </head>
 
-<h1>체험 활동</h1>
-<div class="oneday">
+
+  <div class="search-container">
+    <p class="search-container-title">하루 체험활동<p>
+    <!-- form 태그를 시작하면서 action을 현재 페이지로 설정하고, GET 방식으로 전송합니다. -->
+    <form method="GET" action=".">
+        <input type="text" id="search-input" class="search-input" name="q" placeholder="상세검색">
+        <input type="submit" id="search-button" class="search-button" value="검색">
+    </form>
+  </div>
 
   <div class="oneday-top">
     <div class="oneday-path">
-      <div class="oneday-path-icon">
-        <img src="{% static 'image/homeIcon.png' %}">
-      </div>
+      
       <div class="oneday-path-letter">
+        <img src="{% static 'image/homeIcon.png' %}">
         <span>메인 > 체험 활동</span>
       </div>
-      <div class="oneday-create">
-        <a class="oneday-create-link" href="{% url 'oneday_create' %}">글쓰기</a>
-      </div>
+      
     </div>
-
-    <div class="search-container">
-      <!-- form 태그를 시작하면서 action을 현재 페이지로 설정하고, GET 방식으로 전송합니다. -->
-      <form method="GET" action=".">
-          <input type="text" id="search-input" class="search-input" name="q" placeholder="검색어를 입력하세요">
-          <input type="submit" id="search-button" class="search-button" value="검색">
-      </form>
+    <div class="oneday-create">
+      <a class="oneday-create-link" href="{% url 'oneday_create' %}">글쓰기</a>
     </div>
+  </div>
+<div class="oneday">
 
 
+  {% for onedays in onedays.all %}
   <div class="oneday-content-all">
-    {% for onedays in onedays.all %}
     <div class="oneday-content-one">
-      <div class="oneday-content-img">
-        {% if onedays.photo %}
-        <img src="{{ onedays.photo.url }}" alt="iamge" width="150" height="150">
-        {% endif %}
-      </div>
+      <div class="oneday-content-top">
+        <div class="oneday-content-img">
+          {% if onedays.photo %}
+          <img src="{{ onedays.photo.url }}" alt="iamge" width="150" height="150">
+          {% else %}
+          <div class="empty-image">
+            <!-- 빈 공간 내용 -->
+          </div>
+          {% endif %}
+        </div>
 
-      <div class="oneday-content-letter">
-        <div class="oneday-content-field">
-          <span>{{ onedays.field }}</span>
+        <div class="oneday-content-letter">
+          <div class="oneday-content-field">
+            <span>{{ onedays.field }}</span>
+          </div>
+          <div class="oneday-content-region">
+            <span>{{ onedays.region }}</span>
+          </div>
+          <div class="oneday-content-number">
+            <span>지원 /{{ onedays.number }}</span>
+          </div>
         </div>
-        <div class="oneday-content-region">
-          <span>{{ onedays.region }}</span>
-        </div>
-        <div class="oneday-content-number">
-          <span>지원 /{{ onedays.number }}</span>
-        </div>
+      </div>
+      <div class="oneday-content-title">
+        <span><a href="{% url 'oneday_read' onedays.id %}">{{ onedays.title }}</a></span>
       </div>
       <div>
         <div class="oneday-content-hashtag"></div>
@@ -68,12 +78,17 @@
         </div>
       </div>
 
-      <div class="oneday-content-title">
-        <span><a href="{% url 'oneday_read' onedays.id %}">{{ onedays.title }}</a></span>
-      </div>
+      
     </div>
     {% endfor %}
   </div>
+
+  {% for hashtag in all_hashtags %}
+  <a href="{% url 'search_by_hashtag' hashtag.tag %}" class="btn btn-primary">#{{ hashtag.tag }}</a>
+  {% endfor %}
+</div>
+
+
 
 {% if messages %}
   <ul class="messages">
