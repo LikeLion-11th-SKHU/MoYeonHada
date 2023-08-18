@@ -9,6 +9,13 @@ from mypage.models import Wishlist
 
 def t_main(request):
     teachers = Teacher.objects.all()
+    
+    # 검색 쿼리를 확인합니다.
+    query = request.GET.get('q')
+    if query:
+        # 검색어에 따라 teachers 쿼리셋을 필터링합니다.
+        teachers = teachers.filter(title__icontains=query)
+        
     content = {'teachers':teachers}
     return render(request, 't_main.html', content)
 
@@ -87,3 +94,17 @@ def t_comment_delete(request, comment_pk):
         teacher_pk = comment.teacher_id  # 댓글이 연결된 teacher의 pk 값
         comment.delete()
     return redirect(reverse('t_r', kwargs={'pk': teacher_pk}))
+
+
+from django.contrib import messages
+from django.db.models import Q
+
+def teacher_search(request):
+    query = request.GET.get('query')
+    search_results = []
+
+    if query:
+        search_results = Teacher.objects.filter(title__icontains=query)
+
+    context = {'search_results': search_results, 'query': query}
+    return render(request, 't_main.html', context)

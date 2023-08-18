@@ -20,8 +20,18 @@
 <div class="teacher">
 
   <div class="teacher-container mx-auto">
+    <div class="tp-tt ">
+      <span class="tp-title">모연 배움이</span>
+      <div class="search-container">
+        <form method="GET" action=".">
+          <input type="text" id="search-input" class="search-input" name="q" placeholder="상세검색" style="border: 2px solid rgb(155, 155, 155);">
+          <input type="submit" id="search-button" class="search-button" value="검색" style="border: 2px solid rgb(155, 155, 155);">
+        </form>
+      </div>
+    </div>
 
-    <span class="tp-title">모연 배움이</span>
+    
+
     <div class="teacher-top">
       <div class="teacher-path">
         <div class="teacher-path-icon">
@@ -54,7 +64,7 @@
               <span><img src="{% static 'image/mapIcon.png' %}">{{ students.region }}</span>
             </div>
             <div class="teacher-content-number">
-              <span><img src="{% static 'image/followicon.png' %}">모집 인원 {{ students.number }}</span>
+              <span><img src="{% static 'image/followicon.png' %}">배움 인원 {{ students.number }}</span>
             </div>
           </div>
         </div>

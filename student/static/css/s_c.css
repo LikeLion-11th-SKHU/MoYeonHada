@@ -312,6 +312,21 @@ body {
   }
 
   /* 내가 추가함 */
+  .title,
+  .field,
+  .number,
+  .period,
+  .region,
+  .photo {
+    font-size: 12px;
+  }
+
+  .content {
+    font-size: 12px;
+    display: flex;
+    flex-direction:column;
+  }
+  
   .create-form {
     padding: 5%;
   }

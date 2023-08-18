@@ -7,11 +7,59 @@ body {
     margin-top: 40px;
 }
 
+.tp-tt {
+    display: flex;
+    padding: 32px;
+    align-items: center;
+    justify-content: space-between
+  }
+
 .tp-title {
+    display: flex;
     font-size: 30px;
     color: #FD6F22;
     font-weight: bold;
-    padding-top: 10;
+}
+
+.search-container {
+    display: flex;
+    width: 30%;
+    color: #fd945b;
+    font-size: 25;
+    font-weight: 700;
+}
+
+.search-container form {
+    display: flex;
+    font-size: 20;
+    font-weight: 700;
+    
+    justify-content: center;
+    align-items: center;
+}
+
+.search-input {
+    display: flex;
+    border-radius: 10px;
+    width: 100%;
+    
+    justify-content: center;
+    align-items: center;
+    border-color: #fd945b;
+
+}
+
+.search-button {
+    display: flex;
+    border-radius: 10px;
+    width: 50%;
+    
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+
+    background-color: #ffffff;
+    color: #6b6b6b;
 }
 
 .teacher-path {
@@ -21,6 +69,8 @@ body {
     margin-left: 5%;
     justify-content: space-between;
 }
+
+
 
 .teacher-path-letter span {
     color: #5b5b5b;
@@ -142,7 +192,12 @@ body {
 
 
 /* 반응형 모바일*/
-@media (max-width: 650px) {
+@media (max-width: 900px) {
+    .tp-tt{
+        margin-top: 60px;
+    }
+}
+@media (max-width: 620px) {
     .teacher-content-one {
         margin: 15;
         width: 85%;
@@ -153,11 +208,68 @@ body {
         flex-direction: column;
     }
 
+    .teacher-path-icon img {
+        width: 10px;
+    }
+
     .teacher-path-letter span {
         font-size: 10px;
     }
+
+    .teacher-create-link {
+        font-size: 14px;
+    }
+
+    .tp-tt {
+        margin-top: 30px;
+    }
+
+    .tp-title {
+        display: flex;
+        font-size: 20px;
+        color: #FD6F22;
+        font-weight: bold;
+    }
+
+    .search-container form {
+        display: flex;
+        font-size: 15;
+        font-weight: 700;
+        
+        justify-content: center;
+        align-items: center;
+    }
 }
 
+/* 반응형 모바일*/
+@media (max-width: 410px) {
+    .teacher-content-one {
+        margin: 15;
+        width: 85%;
+        height: 220px;
+    
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .teacher-path-icon img {
+        width: 10px;
+    }
+
+    .teacher-path-letter span {
+        font-size: 10px;
+    }
+
+    .teacher-create-link {
+        font-size: 14px;
+    }
+
+    .tp-tt {
+    
+        margin-top: 10vw;
+    }
+}
 
 .footer {
     background-color: #000000;
