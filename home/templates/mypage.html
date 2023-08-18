@@ -14,6 +14,7 @@
     }
   </style>
 </head>
+
 <div class="mypage_navbar">
   <nav class="mypage_navbar2">
     <span style="margin: 10px;"><a class="nav-corr" href="{% url 'mypage' %}">회원정보</a> </span>
@@ -21,12 +22,12 @@
     <span style="margin: 10px;"><a class="nav-my_posts" href="{% url 'my_posts_t' %}">내가 쓴 글</a> </span>
   </nav>
 </div>
-<hr style="width: 45%; margin: 0px auto;">
-
   <div class="personal_information_correction" >
     <div class="personal-box">
     <div class="inform-box">
-      <br>
+
+  <hr style="width: 45%; margin: 1% auto;">
+
       <p class="td1"class="td1" >{{ user.nickname }}님의 회원정보</p>
     <div class="correction">
       {% if user.profile_image %}

@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-
+<!--nav22-->
 <div class="mypage_navbar">
   <nav class="mypage_navbar2">
     <span style="margin: 10px;"><a class="nav-corr" href="{% url 'mypage' %}">회원정보</a> </span>
@@ -21,22 +21,23 @@
     <span style="margin: 10px;"><a class="nav-my_posts" href="{% url 'my_posts_t' %}">내가 쓴 글</a> </span>
   </nav>
 </div>
-<hr style="width: 45%; margin: 0px auto;">
+
 <br>
 <div>
   <nav>
-    <small><a href="{% url 'my_posts_t' %}" style="color: #FD6F22;font-weight: bold; text-decoration: none;">선생님 글</a></small>
-    <small><a href="{% url 'my_posts_s' %}" style="color: #FD6F22;font-weight: bold; text-decoration: none;">배우미 글</a></small>
-    <small><a href="{% url 'my_posts_o' %}" style="color: #FD6F22;font-weight: bold; text-decoration: none;">체험학습 글</a></small>
+    <small><a class="nav-nav-nav" href="{% url 'my_posts_t' %}"style="font-weight: bold; text-decoration: none;"> 선생님 </a></small>
+    <small><a class="nav-nav-nav" href="{% url 'my_posts_s' %}"style="font-weight: bold; text-decoration: none;"> 배우미 </a></small>
+    <small><a class="nav-nav-nav" href="{% url 'my_posts_o' %}"style="font-weight: bold; text-decoration: none;"> 체험학습 </a></small>
   </nav>
 </div>
-<hr>
+<hr style="width: 45%; margin: 1% auto;">
+<!--nav22-->
+<h2 class="wishlist-title">{{ user.nickname }}님의 [선생님]작성글</h2>
 <div>
-  <br>
-  <h4>내가 쓴 글 모아보기</h4>
+  
   <ul class="mypost-ul">
       {% for post in posts_teacher %}
-          <li>
+          <li class="mypost-li">
               <div class="post-photo">
                   {% if post.photo %}
                   <img src="{{ post.photo.url }}" alt="image" width="200" height="200">
@@ -45,7 +46,7 @@
                   {% endif %}
               </div>
               <div class="post-content">
-                  <div>{{ post.title }}</div>
+                <div><a href="{% url 't_r' post.id %}">{{ post.title }}</a></div>
                   <div>지역: {{ post.region }}</div>
                   <div>모집인원: {{ post.number }}</div>
                   <div><small>{{ post.period1 }} ~ {{ post.period2 }}</small></div>
@@ -54,6 +55,9 @@
                   <a href="{% url 't_u' post.id %}">수정</a>
               </div>
           </li>
+      <br>
+      {% empty %}
+        <p>작성글이 아직 없습니다.</p>
       {% endfor %}
   </ul>
 </div>

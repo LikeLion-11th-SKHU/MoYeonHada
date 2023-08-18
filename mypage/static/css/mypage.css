@@ -1,7 +1,28 @@
-.mypage_navbar2{
-    list-style-type:none; 
-
+.mypage_navbar{
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.mypage_navbar2 span {
+  margin: 10px 0;  
+}
+
+.mypage_navbar2 a {
+  text-decoration: none;
+  color: black;
+}
+
+.mypage_navbar2 a:hover {
+  text-decoration: underline;
+}
+.mypost-li{
+  border: 1px solid #FD6F22;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+}
+.mypage_navbar2{list-style-type:none;}
 .nav-corr{color: inherit;}
 .nav-wishlist{color: inherit;}
 .nav-my_posts{color: inherit;}
@@ -16,17 +37,22 @@
 .mypage_navbar2{
     margin-top: 5%;
 }
-/* nav.mypage_navbar2 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 15vw
-  }
-  .mypage_navbar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  } */
+.vertical-navbar {
+  /* display: flex; */
+  /* flex-direction: column;
+  justify-content: flex-start; */
+  gap: 10px;
+}
+
+.vertical-navbar a {
+  margin: 5px 0;
+  text-decoration: none;
+}
+
+.vertical-navbar a:hover {
+  text-decoration: underline;
+}
+
 /*전체 블럭*/
 .personal_information_correction{
     display:block;
@@ -110,14 +136,23 @@ a:hover{
   .my-page-change-form button {
     margin: 5px;
   }
-
+.nav-nav-nav{
+  padding: 5px;
+  margin: auto 20px;
+  background-color: #fc8d51;
+  border-radius: 30px;
+}
+.nav-nav-nav:hover{
+  background-color: #FD6F22;
+  color: black;
+}
 /*비밀번호변경폼*/
 .password-change-container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .mypage-password-form{
+.mypage-password-form{
     border: 1px solid black;
     background-color: #F8F8F8; 
     border-radius: 30px;
@@ -125,13 +160,13 @@ a:hover{
     width: 75vh;
     height: 50vh;
   }
-  .password-form-group {
+.password-form-group {
     margin-bottom: 1em;
   }
-  .password-change-container button {
+.password-change-container button {
     margin-top: 1em;
   }
-  .my-page-change-form .button-container {
+.my-page-change-form .button-container {
     display: flex;
     justify-content: center;
     gap: 5px;
@@ -186,12 +221,12 @@ a:hover{
 }
 
 .item-image {
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  height: 100px;
   background-color: #b9b9b9;
   border-radius: 15px;
   margin-top: 15px;
-  margin-left: 15px;
+  margin-left: 20px;
   margin-right: 15px;
 }
 
@@ -223,6 +258,9 @@ a:hover{
   top: 10px;
   right: 10px;
 }
+.item-remove a{
+  text-decoration: none;
+}
 
 /*myposts*/
 ul.mypost-ul {
@@ -235,32 +273,48 @@ ul.mypost-ul li {
   display: flex;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #ccc;
 }
-ul.mypost-ul li .post-photo {
+/* ul.mypost-ul li .post-photo {
   flex: 0 0 100px;
-}
+} */
 ul.mypost-ul li .post-photo img {
   display: block;
-  width: 100%;
+  width: 100px;
   height: auto;
-  margin-left: 15px;
+  margin-left: 20px;
 }
 ul.mypost-ul li .post-content {
   flex: 1;
   text-align: center;
 }
 ul.mypost-ul li .post-modify-btn{
-  flex: 0 0 50px;
+  /* flex: 0 0 50px;
   text-align: center;
+  margin-right: 150px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  height: 45px;
+  width: 120px;
+  box-shadow: 3px 3px 2px rgb(185, 185, 185);
+  margin: 1%;
 }
 .post-modify-btn a {
-  display:inline-block;
+  /* display:inline-block;
   width:100%;
   height:100%;
   border: 1px solid #000;
   text-align: center;
   line-height: 20px;
   text-decoration:none;
-  margin-left: 10px;
+  margin-left: 10px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #FD6F22;
+  font-size: 18;
+  font-weight: 700;
 }
