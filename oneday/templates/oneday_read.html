@@ -35,6 +35,8 @@
         <div class="o_photo">
             {% if oneday.photo %}
             <img src="{{ oneday.photo.url }}" alt="image" width="150" height="150" border-radius="8px">
+            {% else %}
+            <div style="background-color: #f7b28e; width: 150px; height: 150; border-radius: 30px;"></div>
             {% endif %}
         </div>
 
@@ -58,7 +60,7 @@
     </div>
 
 
-    <div class="o_r_content">
+    <div class="o_r_content" style="border: 1px solid #FD6F22;width: 70%;">
         {{ oneday.content|safe }} <br>
     </div>
 

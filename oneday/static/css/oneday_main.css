@@ -2,7 +2,8 @@
 
 
 
-.search-container {
+
+.search-container { 
     display: flex;
     align-items: flex-start;
     margin: 90px 0 20px 0;
@@ -58,13 +59,76 @@
 } 
 
 /* 반응형 */ 
- @media (max-width: 700px){
-    .oneday {
-        display: flex;
-        width: 100%;
+@media (max-width: 900px) {
+    .sc-t{
+        margin-top: 60px;
     }
-    
 }
+
+
+@media (max-width: 620px) {
+    .oneday-content-all {
+        margin: 15;
+        width: 85%;
+        height: 220px;
+    
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .oneday-path-icon img {
+        width: 10px;
+    }
+
+    .oneday-path-letter span {
+        font-size: 10px;
+    }
+
+
+
+
+
+
+    .oneday-create-link {
+        font-size: 14px;
+    }
+
+    .sc-t {
+        margin-top: 30px;
+    }
+}
+
+/* 반응형 모바일*/
+@media (max-width: 410px) {
+    .oneday-content-all {
+        margin: 15;
+        width: 85%;
+        height: 220px;
+    
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .oneday-path-icon img {
+        width: 10px;
+    }
+
+    .oneday-path-letter span {
+        font-size: 10px;
+    }
+
+    .oneday-create-link {
+        font-size: 14px;
+    }
+
+    .sc-t {
+    
+        margin-top: 10vw;
+    }
+}
+
 
 
 .empty-image {
@@ -101,7 +165,6 @@
     height: 30px;
     display: flex;
     padding: 5 5 5 5;
-    justify-content: space-between;
 }
 
 .oneday-path-icon img{

@@ -43,8 +43,11 @@
           {% endif %}
         </div>
         <div class="item-info">
-          <div>지역: {{ item.t_post.region }}</div>
-          <div>모집인원: {{ item.t_post.number }}</div>
+          <div class="post-content-som">
+          <div><img src="{% static 'image/mapIcon.png' %}" style="width: 20px;"> {{ item.t_post.region }}</div>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <div><img src="{% static 'image/followicon.png' %}" style="width: 20px;"> {{ item.t_post.number }}</div>
+          </div>
           <div><small>{{ item.t_post.period1 }} ~ {{ item.t_post.period2 }}</small></div>
         </div>
       </li>

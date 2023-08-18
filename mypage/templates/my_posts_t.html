@@ -47,8 +47,10 @@
               </div>
               <div class="post-content">
                 <div><a href="{% url 't_r' post.id %}">{{ post.title }}</a></div>
-                  <div>지역: {{ post.region }}</div>
-                  <div>모집인원: {{ post.number }}</div>
+                <div class="post-content-som">
+                  <div><img src="{% static 'image/mapIcon.png' %}" style="width: 20px;"> {{ post.region }}</div>
+                  <div><img src="{% static 'image/followicon.png' %}" style="width: 20px;"> {{ post.number }}</div>  
+                </div>
                   <div><small>{{ post.period1 }} ~ {{ post.period2 }}</small></div>
               </div>
               <div class="post-modify-btn">

@@ -215,6 +215,13 @@ a:hover{
 .wishlist-item li {
   flex-grow: 1;
 }
+.post-content-som{
+  display:flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px auto;
+}
+
 
 .item-contents {
   display: flex;
