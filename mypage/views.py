@@ -138,7 +138,7 @@ def my_posts_t(request):
     }
                   )
 def my_posts_s(request):
-    posts_student = Student.objects.filter(author = request.user)
+    posts_student = Student.objects.filter(user = request.user)
     return render(request, 'my_posts_s.html',{
         'posts_student':posts_student, 
     }

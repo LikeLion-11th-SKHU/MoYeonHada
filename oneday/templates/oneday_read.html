@@ -35,6 +35,8 @@
         <div class="o_photo">
             {% if oneday.photo %}
             <img src="{{ oneday.photo.url }}" alt="image" width="150" height="150" border-radius="8px">
+            {% else %}
+            <div style="background-color: #f7b28e; width: 150px; height: 150; border-radius: 30px;"></div>
             {% endif %}
         </div>
 
@@ -58,7 +60,7 @@
     </div>
 
 
-    <div class="o_r_content">
+    <div class="o_r_content" style="border: 1px solid #FD6F22;width: 70%;">
         {{ oneday.content|safe }} <br>
     </div>
 
@@ -91,7 +93,7 @@
                 {% csrf_token %}
                 <!-- 바꿔야 됨 -->
                 <div class ="o_delete">
-                    <input type="submit" name="action" value="글 삭제">
+                    <input type="submit" name="action" value="글 삭제" style="border: none;color: #FD6F22;font-weight: bold;background-color:transparent">
                 </div>
             </form>
         </div>
@@ -104,7 +106,27 @@
     </div>
     <div class="o_option">
         <div >
-            <a class="o_bookmark">찜하기</a>
+            <div class="o_bookmark">
+                <!--kimshinhee-->
+
+{% if user.is_authenticated %}
+{% if not already_in_wishlist %}
+  <form method="POST" action="{% url 'add_to_wishlist_o' oneday.id %}" onsubmit="setTimeout(function() {window.location.reload();}, 50);">
+    {% csrf_token %}
+    <button class="o_apply" type="submit" style="border: none;color: #FD6F22;font-weight: bold;background-color:transparent">찜하기</button>
+  </form>
+{% else %}
+  <form method="POST" action="{% url 'remove_from_wishlist_o' oneday.id %}" onsubmit="setTimeout(function() {window.location.reload();}, 50);">
+    {% csrf_token %}
+    <button class="o_apply" type="submit" style="border: none;color: #FD6F22;font-weight: bold;background-color:transparent">찜취소</button>
+  </form>
+{% endif %}
+{% else %}
+<p><a href="{% url 'login' %}">log in</a></p>
+{% endif %}
+
+<!--kimshinhee-->
+</div>
         </div>
     </div>
     {% endif %}
@@ -133,7 +155,7 @@
     <input type="submit" value="댓글등록">
   </form>
   
-  <ul>
+  <ul style="list-style-type: none;">
     {% for comments in comment %}
         <li>
            <!-- 댓글 작성자의 프로필 이미지 표시 -->
@@ -241,32 +263,6 @@
     </ul>
 
 </div>
-
-<!--kimshinhee-->
-
-{% if user.is_authenticated %}
-  {% if not already_in_wishlist %}
-    <form method="POST" action="{% url 'add_to_wishlist_o' oneday.id %}" onsubmit="setTimeout(function() {window.location.reload();}, 50);">
-      {% csrf_token %}
-      <button type="submit">찜하기</button>
-    </form>
-  {% else %}
-    <form method="POST" action="{% url 'remove_from_wishlist_o' oneday.id %}" onsubmit="setTimeout(function() {window.location.reload();}, 50);">
-      {% csrf_token %}
-      <button type="submit">찜취소</button>
-    </form>
-  {% endif %}
-{% else %}
-  <p><a href="{% url 'login' %}">log in</a></p>
-{% endif %}
-
-<!--kimshinhee-->
-
-
-
-
-
-
 
 <script>
 $(document).ready(function() {
