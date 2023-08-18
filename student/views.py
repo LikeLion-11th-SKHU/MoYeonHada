@@ -8,6 +8,13 @@ from django.urls import reverse
 
 def s_main(request):
     students = Student.objects.all()
+    
+    # 검색 쿼리를 확인합니다.
+    query = request.GET.get('q')
+    if query:
+        # 검색어에 따라 students 쿼리셋을 필터링합니다.
+        students = students.filter(title__icontains=query)
+        
     content = {'students':students}
     return render(request, 's_main.html', content)
 
@@ -82,3 +89,14 @@ def s_comment_delete(request, comment_pk):
         student_pk = comment.student_id  # 댓글이 연결된 teacher의 pk 값
         comment.delete()
     return redirect(reverse('s_r', kwargs={'pk': student_pk}))
+
+
+def student_search(request):
+    query = request.GET.get('query')
+    search_results = []
+
+    if query:
+        search_results = Student.objects.filter(title__icontains=query)
+
+    context = {'search_results': search_results, 'query': query}
+    return render(request, 's_main.html', context)

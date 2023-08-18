@@ -254,9 +254,76 @@ body {
         font-size: larger;
     }
 
+    
 
 }
+@media (max-width: 410px) {
+    .user-box {
+        margin-top: 13vh;
+        margin-bottom: 15vh;
+        font-weight: 500;
+        font-size: larger;
+    }
 
+    img.logo {
+        width: 30%;
+        height: 30%;
+    }
+
+    .form-floating {
+        width: 85%;
+    }
+
+    .btn-user {
+        color: white;
+        background-color: #fd6f22b0;
+        border: 0;
+        width: 20vw;
+        height: 5vh;
+        border-radius: 2vw;
+    }
+
+    .btn-user:hover {
+        color: white;
+        background-color: #FD6F22;
+        border: 0;
+        width: 20vw;
+        height: 5vh;
+        transition: 0.2s;
+        border-radius: 2vw;
+    }
+
+    .end-box {
+        margin-top: 18vh;
+        margin-bottom: 18vh;
+        font-weight: 500;
+        font-size: larger;
+    }
+
+    .tr-letters span {
+        font-size: 18px;
+    }
+
+    .tr-letters img {
+        width: 15px;
+        height: 15px;
+        margin-right: 5;
+    }
+
+    .tr-btn input,
+    .tr-btn a {
+        height: 30px;
+        display: flex;
+        text-decoration: none;
+        font-size: 10;
+        font-weight: 0;
+        margin-right: 10;
+    }
+
+    .tr-btn{
+        height: 30px;
+    }
+}
 .footer {
     background-color: #000000;
     color: white;

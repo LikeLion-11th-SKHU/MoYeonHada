@@ -11,5 +11,6 @@ urlpatterns = [
     path('t_u/<int:pk>', views.t_u, name='t_u'),
     path('t_comment/<int:pk>', views.t_comment_create, name='t_comment_create'),
     path('t_comment/<int:comment_pk>/delete', views.t_comment_delete, name='t_comment_delete'),
+    path('search/', views.teacher_search, name='teacher_search'),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

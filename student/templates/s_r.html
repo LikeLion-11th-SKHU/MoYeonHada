@@ -101,7 +101,7 @@
 
         {{comments.content}} <br>
         {% if request.user == comments.user %}
-        <form action="{% url 't_comment_delete' comments.pk %}" method="POST">
+        <form action="{% url 's_comment_delete' comments.pk %}" method="POST">
           {% csrf_token %}
           <input type="submit" value="삭제">
         </form>
